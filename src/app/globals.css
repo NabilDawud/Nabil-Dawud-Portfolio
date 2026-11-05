@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #090B0A;
+  --color-graphite: #191A17;
+  --color-graphite-elevated: #21231F;
+  --color-graphite-card: #141513;
+  --color-border-subtle: #2A2C28;
+  --color-border-accent: rgba(183, 164, 119, 0.25);
+  --color-champagne: #B7A477;
+  --color-champagne-bright: #C8B991;
+  --color-champagne-muted: #8E7F5B;
+  --color-teal: #58B8B0;
+  --color-teal-muted: #3D7D78;
+  --color-ivory: #F4F1E9;
+  --color-sand: #A39E93;
+
+  --font-display: var(--font-display);
+  --font-display-ar: var(--font-display-ar);
+  --font-sans: var(--font-sans);
+  --font-sans-ar: var(--font-sans-ar);
+  --font-mono: var(--font-mono);
+}
+
+:root {
+  --background: #090B0A;
+  --foreground: #F4F1E9;
+}
+
+html {
+  background-color: #090B0A;
+  color: #F4F1E9;
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #090B0A;
+  color: #F4F1E9;
+  font-family: var(--font-sans), var(--font-sans-ar), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: rgba(183, 164, 119, 0.3);
+  color: #F4F1E9;
+}
+
+/* Custom scrollbar for dark cinematic aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090B0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2C28;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B7A477;
+}
