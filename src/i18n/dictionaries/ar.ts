@@ -19,7 +19,7 @@ export const arDictionary: Dictionary = {
     headlineLead: "هندسة رصينة.",
     headlineAccent: "أنظمة خلفية قوية.",
     supportingText: "مهندس برمجيات متخصص في Laravel، والواجهات البرمجية (APIs)، والأنظمة القابلة للتوسع.",
-    academicNote: "خريج هندسة أنظمة الحاسوب، جامعة الأزهر (امتياز — 91.44%)",
+    academicNote: "خريج هندسة أنظمة الحاسوب، جامعة الأزهر",
     exploreWork: "استكشف أعمالي",
     downloadCv: "تحميل السيرة الذاتية",
     letsConnect: "لنتواصل معاً",
@@ -80,6 +80,7 @@ export const arDictionary: Dictionary = {
     sectionBadge: "المسيرة المهنية",
     sectionTitle: "الخبرات العملية، التدريب المتخصص، والتعليم",
     sectionSubtitle: "تسلسل زمني شفاف يوضح العمل الجماعي التطبيقي، البرامج المهنية، والأسس الأكاديمية.",
+    viewFullStory: "اقرأ المسيرة المهنية الكاملة",
     types: {
       experience: "خبرة عملية ضمن فريق",
       program: "برنامج تدريب وتطوير مهني",

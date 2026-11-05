@@ -17,7 +17,7 @@ export const enDictionary = {
     headlineLead: "Thoughtful Engineering.",
     headlineAccent: "Powerful Backends.",
     supportingText: "Software Engineer focused on Laravel, APIs, and scalable systems.",
-    academicNote: "Computer Systems Engineering Graduate, Al-Azhar University (91.44% — Excellent)",
+    academicNote: "Computer Systems Engineering Graduate, Al-Azhar University",
     exploreWork: "Explore My Work",
     downloadCv: "Download CV",
     letsConnect: "Let's Connect",
@@ -78,6 +78,7 @@ export const enDictionary = {
     sectionBadge: "Professional Journey",
     sectionTitle: "Practical Engineering, Training & Education",
     sectionSubtitle: "A transparent timeline of hands-on project collaboration, specialized training, and academic foundations.",
+    viewFullStory: "Read Full Journey & Background",
     types: {
       experience: "Practical Team Experience",
       program: "Professional Training Program",
