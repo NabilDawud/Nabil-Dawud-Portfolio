@@ -1,121 +1,94 @@
 "use client";
 
 import { useLanguage } from "@/i18n";
-import { personalBrand, projects, skillGroups, education, certifications } from "@/data";
+import { personalBrand } from "@/data";
+import { NDMonogram } from "@/components/brand/NDMonogram";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { FileDown, ArrowRight } from "lucide-react";
 
 export default function Home() {
-  const { locale, direction, isRTL, toggleLocale, t, l } = useLanguage();
+  const { locale, direction, isRTL, t, l } = useLanguage();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-6 md:p-12 bg-obsidian text-ivory">
-      <div className="w-full max-w-3xl rounded-2xl border border-border-subtle bg-graphite p-6 md:p-8 space-y-8 shadow-2xl">
-        {/* Header with Language Switcher */}
-        <div className="flex items-center justify-between border-b border-border-subtle pb-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border-subtle bg-graphite-elevated text-xs text-teal">
-            <span className="w-2 h-2 rounded-full bg-teal animate-pulse" />
-            <span>
-              {locale === "en" ? "Milestone 2 Verified — Data & i18n Engine" : "المرحلة 2 جاهزة — نماذج البيانات ومحرك اللغات"}
-            </span>
+    <div className="flex-1 flex flex-col items-center justify-center px-4 py-16 sm:py-24 text-center">
+      <div className="max-w-3xl mx-auto space-y-8">
+        {/* Monogram Hero Motif */}
+        <div className="flex justify-center">
+          <div className="p-3 rounded-3xl bg-graphite/40 border border-border-subtle/80 shadow-2xl shadow-black/60 relative">
+            <NDMonogram size="lg" glow />
+            <div className="absolute -bottom-1 -end-1">
+              <span className="flex h-3 w-3 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-teal" />
+              </span>
+            </div>
           </div>
-
-          <button
-            onClick={toggleLocale}
-            type="button"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-champagne/30 bg-champagne/10 text-champagne hover:bg-champagne/20 transition-colors text-sm font-medium cursor-pointer"
-          >
-            <span>{t.nav.switchLanguage}</span>
-            <span className="text-xs uppercase tracking-wider text-muted opacity-75">
-              ({locale} &rarr; {locale === "en" ? "ar" : "en"})
-            </span>
-          </button>
         </div>
 
-        {/* Brand & Identity Preview */}
-        <div className="space-y-3">
-          <div className="text-xs tracking-wider uppercase text-sand">
-            {t.nav.brandRole} &bull; {l(personalBrand.location)} &bull; {direction.toUpperCase()}
-          </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-ivory font-display">
+        {/* Milestone 3 Verified Badge */}
+        <div>
+          <Badge variant="teal" dot size="md">
+            {locale === "en"
+              ? "Milestone 3 Complete — Shell & Navigation Active"
+              : "المرحلة 3 جاهزة — شريط التنقل والهيكل الأساسي فعال"}
+          </Badge>
+        </div>
+
+        {/* Core Headline & Supporting Statement */}
+        <div className="space-y-4">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-display text-ivory">
             {l(personalBrand.headline.lead)}{" "}
-            <span className="text-champagne">{l(personalBrand.headline.accent)}</span>
+            <span className="text-champagne font-extrabold">
+              {l(personalBrand.headline.accent)}
+            </span>
           </h1>
-          <p className="text-sand text-base md:text-lg">
+
+          <p className="text-base sm:text-xl text-sand max-w-2xl mx-auto font-normal leading-relaxed">
             {l(personalBrand.supportingStatement)}
           </p>
-          <div className="text-xs text-teal/90 font-mono">
+
+          <p className="text-xs sm:text-sm text-sand/80 max-w-xl mx-auto font-mono">
             {t.hero.academicNote}
-          </div>
+          </p>
         </div>
 
-        {/* Structured Data Models Summary */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-border-subtle text-sm">
-          <div className="p-4 rounded-xl border border-border-subtle bg-obsidian space-y-2">
-            <div className="font-semibold text-champagne text-xs uppercase tracking-wider">
-              {t.projects.sectionBadge} ({projects.length} {locale === "en" ? "Projects" : "مشاريع"})
-            </div>
-            <ul className="space-y-1.5 text-xs text-sand">
-              {projects.map((p) => (
-                <li key={p.id} className="flex items-center justify-between">
-                  <span className="text-ivory font-medium">{l(p.title)}</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded border border-border-subtle bg-graphite">
-                    {p.category}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Action Buttons */}
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <Button href="/projects" variant="primary" size="md">
+            <span>{t.hero.exploreWork}</span>
+            <ArrowRight className={isRTL ? "w-4 h-4 rotate-180" : "w-4 h-4"} />
+          </Button>
 
-          <div className="p-4 rounded-xl border border-border-subtle bg-obsidian space-y-2">
-            <div className="font-semibold text-champagne text-xs uppercase tracking-wider">
-              {t.focus.sectionBadge} ({skillGroups.length} {locale === "en" ? "Categories" : "فئات"})
-            </div>
-            <ul className="space-y-1.5 text-xs text-sand">
-              {skillGroups.map((group) => (
-                <li key={group.id} className="flex items-center justify-between">
-                  <span className="text-ivory font-medium">{l(group.title)}</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded border border-border-subtle bg-graphite">
-                    {group.skills.length} {locale === "en" ? "skills" : "مهارات"}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Button
+            href="/assets/cv/nabil-dawud-cv.pdf"
+            variant="secondary"
+            size="md"
+          >
+            <FileDown className="w-4 h-4 text-champagne" />
+            <span>{t.hero.downloadCv}</span>
+          </Button>
 
-          <div className="p-4 rounded-xl border border-border-subtle bg-obsidian space-y-2">
-            <div className="font-semibold text-champagne text-xs uppercase tracking-wider">
-              {t.about.academicSection}
-            </div>
-            <p className="text-xs text-ivory font-medium">{l(education.degree)}</p>
-            <p className="text-xs text-sand">{l(education.institution)} — {l(education.grade)}</p>
-            {education.tawjihiHighlight && (
-              <p className="text-[11px] text-teal">
-                {l(education.tawjihiHighlight.title)}: {education.tawjihiHighlight.score}%
-              </p>
-            )}
-          </div>
-
-          <div className="p-4 rounded-xl border border-border-subtle bg-obsidian space-y-2">
-            <div className="font-semibold text-champagne text-xs uppercase tracking-wider">
-              {t.about.certificationsTitle} ({certifications.length})
-            </div>
-            <ul className="space-y-1.5 text-xs text-sand">
-              {certifications.map((cert) => (
-                <li key={cert.id} className="text-xs">
-                  <div className="text-ivory font-medium">{l(cert.title)}</div>
-                  <div className="text-[10px] text-sand">{l(cert.issuer)} &bull; {l(cert.dateRange)}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <Button href="/contact" variant="outline" size="md">
+            <span>{t.hero.letsConnect}</span>
+          </Button>
         </div>
 
-        {/* State Telemetry Footer */}
-        <div className="pt-2 text-center text-xs text-muted flex items-center justify-between">
-          <span>Active Direction: <code className="text-champagne font-mono">{direction}</code></span>
-          <span>RTL Active: <code className="text-champagne font-mono">{String(isRTL)}</code></span>
-          <span>Locale: <code className="text-champagne font-mono">{locale}</code></span>
+        {/* Telemetry Bar */}
+        <div className="pt-6 border-t border-border-subtle/60 flex flex-wrap items-center justify-center gap-6 text-xs text-sand">
+          <span>
+            Locale: <code className="text-champagne font-mono font-semibold">{locale.toUpperCase()}</code>
+          </span>
+          <span className="text-border-subtle">&bull;</span>
+          <span>
+            Direction: <code className="text-champagne font-mono font-semibold">{direction.toUpperCase()}</code>
+          </span>
+          <span className="text-border-subtle">&bull;</span>
+          <span>
+            RTL Status: <code className="text-champagne font-mono font-semibold">{String(isRTL)}</code>
+          </span>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

@@ -13,6 +13,7 @@ import {
   defaultLocale,
   type Locale,
 } from "@/i18n";
+import { Navbar, Footer } from "@/components/layout";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -82,9 +83,11 @@ export default async function RootLayout({
         h-full antialiased
       `}
     >
-      <body className="min-h-full flex flex-col bg-obsidian text-ivory">
+      <body className="min-h-full flex flex-col bg-obsidian text-ivory selection:bg-champagne/30 selection:text-ivory">
         <LanguageProvider initialLocale={initialLocale}>
-          {children}
+          <Navbar />
+          <div className="flex-1 flex flex-col">{children}</div>
+          <Footer />
         </LanguageProvider>
       </body>
     </html>

@@ -17,6 +17,23 @@ export interface PersonalBrand {
   };
 }
 
+export interface CVConfig {
+  fileName: string;
+  filePath: string;
+  isAvailable: boolean;
+  statusMessage: Localized;
+}
+
+export const cvConfig: CVConfig = {
+  fileName: "Nabil-Dawud-CV.pdf",
+  filePath: "/assets/cv/nabil-dawud-cv.pdf",
+  isAvailable: false, // Set to true once the actual PDF is placed in public/assets/cv/
+  statusMessage: {
+    en: "CV available upon request",
+    ar: "السيرة الذاتية متاحة عند الطلب",
+  },
+};
+
 export const personalBrand: PersonalBrand = {
   name: {
     en: "Nabil Dawud",

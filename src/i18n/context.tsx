@@ -7,6 +7,7 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
+  useRef,
 } from "react";
 import { Locale, Direction, Localized } from "../data/types";
 import { defaultLocale, getDirection, isRTL } from "./config";
@@ -46,28 +47,31 @@ export function LanguageProvider({
 }: LanguageProviderProps) {
   // Initialize with server-provided initialLocale to match SSR exactly
   const [locale, setLocaleState] = useState<Locale>(initialLocale);
-  const [mounted, setMounted] = useState(false);
+  const isFirstRender = useRef(true);
 
   // Synchronize with client-side localStorage preference after initial hydration
   useEffect(() => {
-    setMounted(true);
     try {
       const savedLocale = localStorage.getItem(STORAGE_KEY) as Locale | null;
       if (savedLocale === "en" || savedLocale === "ar") {
         if (savedLocale !== locale) {
-          setLocaleState(savedLocale);
+          queueMicrotask(() => {
+            setLocaleState(savedLocale);
+          });
         }
       } else {
         // Fallback to browser language if Arabic on first visit with no existing cookie
         const browserLang = navigator.language?.toLowerCase() ?? "";
         if (browserLang.startsWith("ar") && locale !== "ar") {
-          setLocaleState("ar");
+          queueMicrotask(() => {
+            setLocaleState("ar");
+          });
         }
       }
     } catch {
       // LocalStorage access might fail in restricted or private browsing
     }
-  }, []); // Run once on mount
+  }, [locale]);
 
   const direction = useMemo(() => getDirection(locale), [locale]);
   const rtl = useMemo(() => isRTL(locale), [locale]);
@@ -75,7 +79,10 @@ export function LanguageProvider({
 
   // Synchronize document attributes, localStorage, and cookie on state changes
   useEffect(() => {
-    if (!mounted) return;
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
 
     try {
       document.documentElement.lang = locale;
@@ -85,7 +92,7 @@ export function LanguageProvider({
     } catch {
       // Ignore storage/cookie restriction errors
     }
-  }, [locale, direction, mounted]);
+  }, [locale, direction]);
 
   const setLocale = useCallback((newLocale: Locale) => {
     if (newLocale === "en" || newLocale === "ar") {
