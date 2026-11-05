@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import {
   Plus_Jakarta_Sans,
   Geist,
@@ -6,6 +7,12 @@ import {
   Alexandria,
   IBM_Plex_Sans_Arabic,
 } from "next/font/google";
+import {
+  LanguageProvider,
+  getDirection,
+  defaultLocale,
+  type Locale,
+} from "@/i18n";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -51,15 +58,21 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://nabildawud.dev"),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Read persistent cookie on the server
+  const cookieStore = await cookies();
+  const rawLocale = cookieStore.get("NEXT_LOCALE")?.value;
+  const initialLocale: Locale = rawLocale === "ar" ? "ar" : defaultLocale;
+  const initialDir = getDirection(initialLocale);
+
   return (
     <html
-      lang="en"
-      dir="ltr"
+      lang={initialLocale}
+      dir={initialDir}
       className={`
         ${plusJakartaSans.variable} 
         ${geistSans.variable} 
@@ -70,7 +83,9 @@ export default function RootLayout({
       `}
     >
       <body className="min-h-full flex flex-col bg-obsidian text-ivory">
-        {children}
+        <LanguageProvider initialLocale={initialLocale}>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );
