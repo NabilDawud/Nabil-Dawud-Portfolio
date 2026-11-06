@@ -54,24 +54,22 @@ export function LanguageProvider({
     try {
       const savedLocale = localStorage.getItem(STORAGE_KEY) as Locale | null;
       if (savedLocale === "en" || savedLocale === "ar") {
-        if (savedLocale !== locale) {
-          queueMicrotask(() => {
-            setLocaleState(savedLocale);
-          });
-        }
+        queueMicrotask(() => {
+          setLocaleState((current) => (current !== savedLocale ? savedLocale : current));
+        });
       } else {
         // Fallback to browser language if Arabic on first visit with no existing cookie
         const browserLang = navigator.language?.toLowerCase() ?? "";
-        if (browserLang.startsWith("ar") && locale !== "ar") {
+        if (browserLang.startsWith("ar")) {
           queueMicrotask(() => {
-            setLocaleState("ar");
+            setLocaleState((current) => (current !== "ar" ? "ar" : current));
           });
         }
       }
     } catch {
       // LocalStorage access might fail in restricted or private browsing
     }
-  }, [locale]);
+  }, []);
 
   const direction = useMemo(() => getDirection(locale), [locale]);
   const rtl = useMemo(() => isRTL(locale), [locale]);

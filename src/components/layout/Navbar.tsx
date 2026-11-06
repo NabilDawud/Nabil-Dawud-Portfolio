@@ -93,14 +93,14 @@ export function Navbar() {
                 download={cvConfig.fileName}
                 variant="outline"
                 size="sm"
-                className="hidden sm:inline-flex text-xs font-semibold gap-1.5"
+                className="hidden lg:inline-flex text-xs font-semibold gap-1.5"
               >
                 <FileDown className="w-3.5 h-3.5 text-champagne" />
                 <span>{t.nav.downloadCv}</span>
               </Button>
             ) : (
               <div
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border-subtle bg-graphite/40 text-sand text-xs font-medium cursor-default select-none opacity-80"
+                className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border-subtle bg-graphite/40 text-sand text-xs font-medium cursor-default select-none opacity-80"
                 title={l(cvConfig.statusMessage)}
                 aria-label={l(cvConfig.statusMessage)}
               >
