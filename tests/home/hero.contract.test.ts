@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert";
+import fs from "node:fs";
+import path from "node:path";
 import { personalBrand, cvConfig } from "@/data/personal";
 import { enDictionary } from "@/i18n/dictionaries/en";
 import { arDictionary } from "@/i18n/dictionaries/ar";
@@ -27,4 +29,10 @@ test("Task 1: Hero contract and component exports", () => {
   // 4. Components must be functions
   assert.strictEqual(typeof HeroPortraitSlot, "function");
   assert.strictEqual(typeof HeroSection, "function");
+
+  // 5. Hero portrait asset contract
+  const portraitPath = path.join(process.cwd(), "public", "assets", "images", "nabil-dawud-portrait.webp");
+  assert.strictEqual(fs.existsSync(portraitPath), true, "Portrait asset must exist at public/assets/images/nabil-dawud-portrait.webp");
+  assert.ok(enDictionary.hero.portraitAlt.length > 0);
+  assert.ok(arDictionary.hero.portraitAlt.length > 0);
 });

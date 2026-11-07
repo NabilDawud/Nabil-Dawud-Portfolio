@@ -24,6 +24,7 @@ export const enDictionary = {
     requestCv: "Request CV",
     letsConnect: "Let's Connect",
     location: "Gaza, Palestine",
+    portraitAlt: "Portrait of Nabil Dawud, Software Engineer",
   },
   focus: {
     sectionBadge: "Technical Focus",

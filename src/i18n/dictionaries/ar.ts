@@ -26,6 +26,7 @@ export const arDictionary: Dictionary = {
     requestCv: "طلب السيرة الذاتية",
     letsConnect: "لنتواصل معاً",
     location: "غزة، فلسطين",
+    portraitAlt: "صورة شخصية للمهندس نبيل داود",
   },
   focus: {
     sectionBadge: "التركيز التقني",
