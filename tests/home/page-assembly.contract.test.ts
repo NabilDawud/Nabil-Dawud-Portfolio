@@ -14,8 +14,8 @@ test("Task 5 (Part B): Page Assembly and section anchors", () => {
   assert.strictEqual(typeof HomeComponents.EducationPreviewSection, "function");
   assert.strictEqual(typeof HomeComponents.ContactCtaSection, "function");
 
-  // 2. src/app/page.tsx must assemble all sections and define necessary anchors
-  const pageSourcePath = path.resolve(process.cwd(), "src/app/page.tsx");
+  // 2. src/app/[locale]/page.tsx must assemble all sections and define necessary anchors
+  const pageSourcePath = path.resolve(process.cwd(), "src/app/[locale]/page.tsx");
   const pageSource = fs.readFileSync(pageSourcePath, "utf-8");
 
   assert.match(pageSource, /<HeroSection\s*\/>/);

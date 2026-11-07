@@ -8,6 +8,7 @@ import { personalBrand } from "@/data";
 import { NDMonogram, GithubIcon, LinkedinIcon } from "../brand";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { cn } from "@/lib/utils";
+import { localizePath } from "@/lib/navigation";
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -24,7 +25,7 @@ export function MobileNav({
   triggerRef,
   onRequestCV,
 }: MobileNavProps) {
-  const { t, l } = useLanguage();
+  const { t, l, locale } = useLanguage();
   const drawerRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const wasOpenRef = useRef(false);
@@ -141,7 +142,7 @@ export function MobileNav({
             {navItems.map((item) => (
               <Link
                 key={item.href}
-                href={item.href}
+                href={localizePath(item.href, locale)}
                 onClick={onClose}
                 className={cn(
                   "px-4 py-3 rounded-xl text-base font-medium text-ivory hover:text-champagne hover:bg-graphite-elevated border border-transparent hover:border-border-subtle/50 transition-all flex items-center justify-between"

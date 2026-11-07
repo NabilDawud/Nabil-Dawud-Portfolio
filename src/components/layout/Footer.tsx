@@ -5,9 +5,10 @@ import { ArrowUp } from "lucide-react";
 import { useLanguage } from "@/i18n";
 import { personalBrand, education } from "@/data";
 import { BrandMark, GithubIcon, LinkedinIcon } from "../brand";
+import { localizePath } from "@/lib/navigation";
 
 export function Footer() {
-  const { t, l } = useLanguage();
+  const { t, l, locale } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
@@ -40,7 +41,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="/projects"
+                  href={localizePath("/projects", locale)}
                   className="text-sand hover:text-ivory transition-colors"
                 >
                   {t.nav.projects}
@@ -48,7 +49,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#focus"
+                  href={localizePath("/#focus", locale)}
                   className="text-sand hover:text-ivory transition-colors"
                 >
                   {t.nav.focus}
@@ -56,7 +57,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#journey"
+                  href={localizePath("/#journey", locale)}
                   className="text-sand hover:text-ivory transition-colors"
                 >
                   {t.nav.journey}
@@ -64,7 +65,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href={localizePath("/about", locale)}
                   className="text-sand hover:text-ivory transition-colors"
                 >
                   {t.nav.about}
@@ -72,7 +73,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href={localizePath("/contact", locale)}
                   className="text-sand hover:text-ivory transition-colors"
                 >
                   {t.nav.contact}

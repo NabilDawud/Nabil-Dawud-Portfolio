@@ -5,6 +5,7 @@ import { NDMonogram } from "./NDMonogram";
 import { useLanguage } from "@/i18n";
 import { personalBrand } from "@/data";
 import { cn } from "@/lib/utils";
+import { localizePath } from "@/lib/navigation";
 
 interface BrandMarkProps {
   className?: string;
@@ -17,11 +18,11 @@ export function BrandMark({
   size = "md",
   showSubtitle = true,
 }: BrandMarkProps) {
-  const { l } = useLanguage();
+  const { l, locale } = useLanguage();
 
   return (
     <Link
-      href="/"
+      href={localizePath("/", locale)}
       className={cn(
         "group inline-flex items-center gap-3 text-start transition-opacity hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne rounded-lg p-1 -m-1",
         className

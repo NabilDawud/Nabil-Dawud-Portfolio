@@ -11,9 +11,10 @@ import { MobileNav } from "./MobileNav";
 import { CVRequestModal } from "../cv/CVRequestModal";
 import { Button } from "../ui/Button";
 import { cn } from "@/lib/utils";
+import { localizePath } from "@/lib/navigation";
 
 export function Navbar() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cvModalOpen, setCvModalOpen] = useState(false);
@@ -45,8 +46,9 @@ export function Navbar() {
 
   const isActive = (href: string) => {
     if (href.startsWith("/#")) return false;
-    if (href === "/" && pathname === "/") return true;
-    return pathname.startsWith(href);
+    const localized = localizePath(href, locale);
+    if ((href === "/" || localized === "/ar") && (pathname === "/" || pathname === "/ar")) return true;
+    return pathname.startsWith(localized);
   };
 
   return (
@@ -72,10 +74,11 @@ export function Navbar() {
           >
             {navItems.map((item) => {
               const active = isActive(item.href);
+              const localizedHref = localizePath(item.href, locale);
               return (
                 <Link
                   key={item.href}
-                  href={item.href}
+                  href={localizedHref}
                   className={cn(
                     "px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne",
                     active

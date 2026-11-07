@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { LanguageContext } from "@/i18n";
+import { localizePath } from "@/lib/navigation";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -53,6 +55,10 @@ export const Button = React.forwardRef<
       lg: "h-12 px-6 text-base rounded-xl gap-2.5",
     };
 
+    const langContext = useContext(LanguageContext);
+    const locale = langContext?.locale ?? "en";
+    const finalHref = href ? localizePath(href, locale) : undefined;
+
     const combinedClassName = cn(
       baseStyles,
       variantStyles[variant],
@@ -60,11 +66,11 @@ export const Button = React.forwardRef<
       className
     );
 
-    if (href) {
+    if (finalHref) {
       if (external || download) {
         return (
           <a
-            href={href}
+            href={finalHref}
             download={download}
             target={external ? "_blank" : undefined}
             rel={external ? "noopener noreferrer" : undefined}
@@ -77,7 +83,7 @@ export const Button = React.forwardRef<
       }
       return (
         <Link
-          href={href}
+          href={finalHref}
           className={combinedClassName}
           ref={ref as React.Ref<HTMLAnchorElement>}
         >

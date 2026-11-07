@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Project } from "@/data/types";
 import { useLanguage } from "@/i18n";
+import { localizePath } from "@/lib/navigation";
 
 interface CaseStudyNavProps {
   prevProject: Project | null;
@@ -17,12 +18,14 @@ export function CaseStudyNav({
   nextProject,
   fromParam,
 }: CaseStudyNavProps) {
-  const { t, l, isRTL } = useLanguage();
+  const { t, l, isRTL, locale } = useLanguage();
 
   const buildUrl = (slug: string) => {
-    return fromParam && fromParam !== "all"
-      ? `/projects/${slug}?from=${encodeURIComponent(fromParam)}`
-      : `/projects/${slug}`;
+    const raw =
+      fromParam && fromParam !== "all"
+        ? `/projects/${slug}?from=${encodeURIComponent(fromParam)}`
+        : `/projects/${slug}`;
+    return localizePath(raw, locale);
   };
 
   return (

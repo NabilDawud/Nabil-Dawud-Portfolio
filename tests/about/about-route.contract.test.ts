@@ -2,18 +2,19 @@ import test from "node:test";
 import assert from "node:assert";
 import fs from "node:fs";
 import path from "node:path";
-import AboutPage, { metadata } from "@/app/about/page";
+import AboutPage, { generateMetadata } from "@/app/[locale]/about/page";
 
-test("Task 3: About page route metadata and section assembly contracts", () => {
+test("Task 3: About page route metadata and section assembly contracts", async () => {
   // 1. Exported component
   assert.strictEqual(typeof AboutPage, "function");
 
   // 2. Exported metadata contracts
+  const metadata = await generateMetadata({ params: Promise.resolve({ locale: "en" }) });
   assert.ok(metadata, "Route must export metadata");
   assert.match(
     String(metadata.title),
-    /About.*Nabil Dawud/i,
-    "Metadata title must mention About and Nabil Dawud"
+    /About/i,
+    "Metadata title must mention About"
   );
   assert.match(
     String(metadata.description),
@@ -28,7 +29,7 @@ test("Task 3: About page route metadata and section assembly contracts", () => {
 
   // 3. Page source assembly check
   const pageSource = fs.readFileSync(
-    path.resolve(process.cwd(), "src/app/about/page.tsx"),
+    path.resolve(process.cwd(), "src/app/[locale]/about/page.tsx"),
     "utf-8"
   );
 

@@ -16,6 +16,7 @@ import { Project } from "@/data/types";
 import { useLanguage } from "@/i18n";
 import { getSafeBackUrl, isTeamProject } from "@/data/projects-helpers";
 import { Badge } from "../ui/Badge";
+import { localizePath } from "@/lib/navigation";
 
 interface CaseStudyHeaderProps {
   project: Project;
@@ -23,8 +24,8 @@ interface CaseStudyHeaderProps {
 }
 
 export function CaseStudyHeader({ project, fromParam }: CaseStudyHeaderProps) {
-  const { t, l, isRTL } = useLanguage();
-  const backUrl = getSafeBackUrl(fromParam);
+  const { t, l, isRTL, locale } = useLanguage();
+  const backUrl = localizePath(getSafeBackUrl(fromParam), locale);
 
   const isTeam = isTeamProject(project);
 

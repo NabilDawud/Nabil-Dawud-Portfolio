@@ -14,13 +14,14 @@ import { GithubIcon } from "../brand/SocialIcons";
 import { Project } from "@/data/types";
 import { useLanguage } from "@/i18n";
 import { Badge } from "../ui/Badge";
+import { localizePath } from "@/lib/navigation";
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const { t, l, isRTL } = useLanguage();
+  const { t, l, isRTL, locale } = useLanguage();
   const isTeamProject =
     project.ownership.en.toLowerCase().includes("team") ||
     project.id === "masar" ||
@@ -161,7 +162,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
           {/* Deep Case Study Link */}
           <Link
-            href={`/projects/${project.slug}`}
+            href={localizePath(`/projects/${project.slug}`, locale)}
             className="inline-flex items-center gap-1 text-xs font-semibold text-ivory hover:text-champagne transition-colors"
           >
             <span>{t.projects.viewCaseStudy}</span>

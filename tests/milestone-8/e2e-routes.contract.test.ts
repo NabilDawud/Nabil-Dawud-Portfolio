@@ -12,14 +12,14 @@ import { enDictionary, arDictionary } from "@/i18n";
 import {
   generateStaticParams,
   generateMetadata as generateCaseStudyMetadata,
-} from "@/app/projects/[slug]/page";
+} from "@/app/[locale]/projects/[slug]/page";
 
 test("Task 1.1: Static parameter resolution and case-study route parity", async () => {
   const staticParams = await generateStaticParams();
   assert.strictEqual(Array.isArray(staticParams), true);
-  assert.strictEqual(staticParams.length, 5, "Must generate exactly 5 static project routes");
+  assert.strictEqual(staticParams.length, 10, "Must generate exactly 10 static project routes across locales");
 
-  const resolvedSlugs = staticParams.map((p) => p.slug).sort();
+  const resolvedSlugs = Array.from(new Set(staticParams.map((p) => p.slug))).sort();
   const expectedSlugs = [
     "apartment-marketplace",
     "masar",
@@ -38,7 +38,7 @@ test("Task 1.1: Static parameter resolution and case-study route parity", async 
     assert.ok(project, `Project with slug '${slug}' must exist in projects data`);
 
     const meta = await generateCaseStudyMetadata({
-      params: Promise.resolve({ slug }),
+      params: Promise.resolve({ slug, locale: "en" }),
     });
 
     assert.ok(meta, `Metadata for '${slug}' must be generated`);

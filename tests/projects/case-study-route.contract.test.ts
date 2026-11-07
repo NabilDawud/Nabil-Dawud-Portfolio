@@ -8,15 +8,15 @@ import {
 import {
   generateStaticParams,
   generateMetadata,
-} from "@/app/projects/[slug]/page";
+} from "@/app/[locale]/projects/[slug]/page";
 
 test("Task 2 (Step 6): Dynamic Case Study Route contract and static params", async () => {
-  // 1. generateStaticParams pre-renders all 5 projects
+  // 1. generateStaticParams pre-renders all 5 projects across locales (5 x 2 = 10)
   const params = await generateStaticParams();
   assert.strictEqual(Array.isArray(params), true);
-  assert.strictEqual(params.length, 5);
+  assert.strictEqual(params.length, 10);
 
-  const slugs = params.map((p) => p.slug);
+  const slugs = Array.from(new Set(params.map((p) => p.slug)));
   const expectedSlugs = [
     "meshwar",
     "masar",
@@ -36,7 +36,7 @@ test("Task 2 (Step 6): Dynamic Case Study Route contract and static params", asy
   // 3. generateMetadata respects Next.js 16 async params contract
   for (const slug of expectedSlugs) {
     const meta = await generateMetadata({
-      params: Promise.resolve({ slug }),
+      params: Promise.resolve({ slug, locale: "en" }),
     });
 
     assert.ok(meta, `Metadata for ${slug} must be defined`);
@@ -51,7 +51,7 @@ test("Task 2 (Step 6): Dynamic Case Study Route contract and static params", asy
 
   // 3. generateMetadata for unknown slug returns fallback title
   const unknownMeta = await generateMetadata({
-    params: Promise.resolve({ slug: "non-existent-project" }),
+    params: Promise.resolve({ slug: "non-existent-project", locale: "en" }),
   });
   assert.strictEqual(unknownMeta.title, "Project Not Found");
 

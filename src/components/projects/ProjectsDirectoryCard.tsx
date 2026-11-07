@@ -16,6 +16,7 @@ import { Project } from "@/data/types";
 import { isTeamProject } from "@/data/projects-helpers";
 import { useLanguage } from "@/i18n";
 import { Badge } from "../ui/Badge";
+import { localizePath } from "@/lib/navigation";
 
 interface ProjectsDirectoryCardProps {
   project: Project;
@@ -26,17 +27,18 @@ export function ProjectsDirectoryCard({
   project,
   fromFilter,
 }: ProjectsDirectoryCardProps) {
-  const { t, l, isRTL } = useLanguage();
+  const { t, l, isRTL, locale } = useLanguage();
 
   const isTeam = isTeamProject(project);
 
   const isFlagship = project.featured;
 
   // Preserve filter context safely if set and not "all"
-  const caseStudyUrl =
+  const rawUrl =
     fromFilter && fromFilter !== "all"
       ? `/projects/${project.slug}?from=${encodeURIComponent(fromFilter)}`
       : `/projects/${project.slug}`;
+  const caseStudyUrl = localizePath(rawUrl, locale);
 
   // Localized status string
   const statusLabel =

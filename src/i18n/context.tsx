@@ -7,7 +7,6 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
-  useRef,
 } from "react";
 import { Locale, Direction, Localized } from "../data/types";
 import { defaultLocale, getDirection, isRTL } from "./config";
@@ -30,7 +29,7 @@ const dictionaries: Record<Locale, Dictionary> = {
   ar: arDictionary,
 };
 
-const LanguageContext = createContext<LanguageContextType | undefined>(
+export const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined
 );
 
@@ -45,31 +44,31 @@ export function LanguageProvider({
   children,
   initialLocale = defaultLocale,
 }: LanguageProviderProps) {
-  // Initialize with server-provided initialLocale to match SSR exactly
+  // Initialize with server-provided initialLocale from route segment
   const [locale, setLocaleState] = useState<Locale>(initialLocale);
-  const isFirstRender = useRef(true);
+  const [prevInitialLocale, setPrevInitialLocale] = useState<Locale>(initialLocale);
+
+  // Synchronize state during render when route initialLocale changes
+  if (initialLocale !== prevInitialLocale) {
+    setPrevInitialLocale(initialLocale);
+    setLocaleState(initialLocale);
+  }
 
   // Synchronize with client-side localStorage preference after initial hydration
   useEffect(() => {
     try {
       const savedLocale = localStorage.getItem(STORAGE_KEY) as Locale | null;
       if (savedLocale === "en" || savedLocale === "ar") {
-        queueMicrotask(() => {
-          setLocaleState((current) => (current !== savedLocale ? savedLocale : current));
-        });
-      } else {
-        // Fallback to browser language if Arabic on first visit with no existing cookie
-        const browserLang = navigator.language?.toLowerCase() ?? "";
-        if (browserLang.startsWith("ar")) {
+        if (savedLocale !== initialLocale) {
           queueMicrotask(() => {
-            setLocaleState((current) => (current !== "ar" ? "ar" : current));
+            setLocaleState(savedLocale);
           });
         }
       }
     } catch {
       // LocalStorage access might fail in restricted or private browsing
     }
-  }, []);
+  }, [initialLocale]);
 
   const direction = useMemo(() => getDirection(locale), [locale]);
   const rtl = useMemo(() => isRTL(locale), [locale]);
@@ -77,18 +76,13 @@ export function LanguageProvider({
 
   // Synchronize document attributes, localStorage, and cookie on state changes
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-
     try {
       document.documentElement.lang = locale;
       document.documentElement.dir = direction;
       localStorage.setItem(STORAGE_KEY, locale);
       document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000; SameSite=Lax`;
     } catch {
-      // Ignore storage/cookie restriction errors
+      // Ignore storage/cookie restriction errors in private browsing
     }
   }, [locale, direction]);
 

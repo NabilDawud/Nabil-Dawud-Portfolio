@@ -1,6 +1,6 @@
-"use client";
-
 import React from "react";
+import type { Metadata } from "next";
+import { defaultOgImages, SITE_URL } from "@/lib/seo";
 import {
   HeroSection,
   TechnicalFocusSection,
@@ -9,6 +9,30 @@ import {
   EducationPreviewSection,
   ContactCtaSection,
 } from "@/components/home";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const isAr = locale === "ar";
+
+  return {
+    alternates: {
+      canonical: isAr ? "/ar" : "/",
+      languages: {
+        en: "/",
+        ar: "/ar",
+        "x-default": "/",
+      },
+    },
+    openGraph: {
+      url: isAr ? `${SITE_URL}/ar` : SITE_URL,
+      images: defaultOgImages,
+    },
+  };
+}
 
 export default function Home() {
   return (
