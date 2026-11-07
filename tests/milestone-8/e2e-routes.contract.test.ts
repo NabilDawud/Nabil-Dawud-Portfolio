@@ -147,11 +147,21 @@ test("Task 1.3: Data model privacy — zero plaintext emails or mailto links in 
 test("Task 1.4: CV download gate and availability contract", () => {
   assert.strictEqual(
     cvConfig.isAvailable,
-    false,
-    "cvConfig.isAvailable must remain false until production PDF is verified and placed"
+    true,
+    "cvConfig.isAvailable must be true when production PDF is verified and placed"
   );
   assert.ok(cvConfig.statusMessage.en, "cvConfig statusMessage.en must be defined");
   assert.ok(cvConfig.statusMessage.ar, "cvConfig statusMessage.ar must be defined");
   assert.strictEqual(typeof cvConfig.fileName, "string");
+  assert.strictEqual(cvConfig.fileName, "Nabil-Dawud-CV.pdf");
   assert.strictEqual(typeof cvConfig.filePath, "string");
+  assert.strictEqual(cvConfig.filePath, "/assets/cv/nabil-dawud-cv.pdf");
+
+  // Verify the PDF asset exists on disk at the public path
+  const expectedPdfPath = path.join(process.cwd(), "public", cvConfig.filePath);
+  assert.strictEqual(
+    fs.existsSync(expectedPdfPath),
+    true,
+    `Production CV PDF must exist at '${expectedPdfPath}'`
+  );
 });

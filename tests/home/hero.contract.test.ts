@@ -14,7 +14,9 @@ test("Task 1: Hero contract and component exports", () => {
   assert.ok(personalBrand.socials.linkedin.startsWith("https://linkedin.com/"));
 
   // 2. CV configuration integrity
-  assert.strictEqual(cvConfig.isAvailable, false);
+  assert.strictEqual(cvConfig.isAvailable, true);
+  assert.strictEqual(cvConfig.fileName, "Nabil-Dawud-CV.pdf");
+  assert.strictEqual(cvConfig.filePath, "/assets/cv/nabil-dawud-cv.pdf");
   assert.ok(cvConfig.statusMessage.en.length > 0);
   assert.ok(cvConfig.statusMessage.ar.length > 0);
 

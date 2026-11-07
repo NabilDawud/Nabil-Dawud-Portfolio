@@ -27,10 +27,10 @@ export interface CVConfig {
 export const cvConfig: CVConfig = {
   fileName: "Nabil-Dawud-CV.pdf",
   filePath: "/assets/cv/nabil-dawud-cv.pdf",
-  isAvailable: false, // Set to true once the actual PDF is placed in public/assets/cv/
+  isAvailable: true,
   statusMessage: {
-    en: "CV available upon request",
-    ar: "السيرة الذاتية متاحة عند الطلب",
+    en: "CV available for download",
+    ar: "السيرة الذاتية متاحة للتحميل",
   },
 };
 
