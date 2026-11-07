@@ -2,9 +2,9 @@
 
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
-import { X, FileDown, FileText } from "lucide-react";
+import { X, FileText } from "lucide-react";
 import { useLanguage } from "@/i18n";
-import { personalBrand, cvConfig } from "@/data";
+import { personalBrand } from "@/data";
 import { NDMonogram, GithubIcon, LinkedinIcon } from "../brand";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ interface MobileNavProps {
   onClose: () => void;
   navItems: Array<{ href: string; label: string; isAnchor?: boolean }>;
   triggerRef?: React.RefObject<HTMLButtonElement | null>;
+  onRequestCV?: () => void;
 }
 
 export function MobileNav({
@@ -21,6 +22,7 @@ export function MobileNav({
   onClose,
   navItems,
   triggerRef,
+  onRequestCV,
 }: MobileNavProps) {
   const { t, l } = useLanguage();
   const drawerRef = useRef<HTMLDivElement>(null);
@@ -164,24 +166,21 @@ export function MobileNav({
           </div>
 
           {/* Centralized CV Action */}
-          {cvConfig.isAvailable ? (
-            <a
-              href={cvConfig.filePath}
-              download={cvConfig.fileName}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-champagne/40 bg-champagne/10 text-champagne text-sm font-semibold hover:bg-champagne/20 transition-colors"
-            >
-              <FileDown className="w-4 h-4" />
-              <span>{t.nav.downloadCv}</span>
-            </a>
-          ) : (
-            <div
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-border-subtle/80 bg-graphite-elevated/40 text-sand text-xs font-medium select-none cursor-default"
-              aria-label={l(cvConfig.statusMessage)}
-            >
-              <FileText className="w-4 h-4 text-champagne/60 shrink-0" />
-              <span>{l(cvConfig.statusMessage)}</span>
-            </div>
-          )}
+          <button
+            onClick={() => {
+              onClose();
+              if (onRequestCV) {
+                onRequestCV();
+              } else {
+                window.dispatchEvent(new CustomEvent("open-cv-request"));
+              }
+            }}
+            type="button"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-champagne/40 bg-champagne/10 text-champagne text-sm font-semibold hover:bg-champagne/20 transition-colors"
+          >
+            <FileText className="w-4 h-4" />
+            <span>{t.nav.requestCv || t.nav.downloadCv}</span>
+          </button>
 
           {/* Social Profiles */}
           <div className="flex items-center justify-center gap-5 pt-2 text-xs text-sand">

@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import { ArrowDown, FileDown, FileText } from "lucide-react";
+import { ArrowDown, FileText } from "lucide-react";
 import { useLanguage } from "@/i18n";
-import { personalBrand, cvConfig } from "@/data/personal";
+import { personalBrand } from "@/data/personal";
 import { Button } from "../ui/Button";
 import { Badge } from "../ui/Badge";
 import { GithubIcon, LinkedinIcon } from "../brand/SocialIcons";
@@ -64,28 +64,18 @@ export function HeroSection() {
                 <ArrowDown className="w-4 h-4 text-obsidian" />
               </Button>
 
-              {/* Centralized CV Button State */}
-              {cvConfig.isAvailable ? (
-                <Button
-                  href={cvConfig.filePath}
-                  download={cvConfig.fileName}
-                  variant="outline"
-                  size="lg"
-                  className="gap-2"
-                >
-                  <FileDown className="w-4 h-4 text-champagne" />
-                  <span>{t.hero.downloadCv}</span>
-                </Button>
-              ) : (
-                <div
-                  className="inline-flex items-center gap-2 px-4 py-3 rounded-xl border border-border-subtle bg-graphite/40 text-sand text-xs sm:text-sm font-medium cursor-default select-none opacity-85"
-                  title={l(cvConfig.statusMessage)}
-                  aria-label={l(cvConfig.statusMessage)}
-                >
-                  <FileText className="w-4 h-4 text-champagne/70 shrink-0" />
-                  <span>{l(cvConfig.statusMessage)}</span>
-                </div>
-              )}
+              {/* Centralized CV Action */}
+              <Button
+                onClick={() => {
+                  window.dispatchEvent(new CustomEvent("open-cv-request"));
+                }}
+                variant="outline"
+                size="lg"
+                className="gap-2"
+              >
+                <FileText className="w-4 h-4 text-champagne" />
+                <span>{t.hero.requestCv || t.hero.downloadCv}</span>
+              </Button>
             </div>
 
             {/* Social Connectivity Bar */}

@@ -63,6 +63,7 @@ test("Task 1.2: Bilingual dictionary parity across all namespaces", () => {
     "contact",
     "footer",
     "common",
+    "cvRequest",
   ] as const;
 
   function getAllKeys(obj: Record<string, unknown>, prefix = ""): string[] {
@@ -147,21 +148,17 @@ test("Task 1.3: Data model privacy — zero plaintext emails or mailto links in 
 test("Task 1.4: CV download gate and availability contract", () => {
   assert.strictEqual(
     cvConfig.isAvailable,
-    true,
-    "cvConfig.isAvailable must be true when production PDF is verified and placed"
+    false,
+    "cvConfig.isAvailable must remain false for request-and-approval workflow"
   );
-  assert.ok(cvConfig.statusMessage.en, "cvConfig statusMessage.en must be defined");
-  assert.ok(cvConfig.statusMessage.ar, "cvConfig statusMessage.ar must be defined");
-  assert.strictEqual(typeof cvConfig.fileName, "string");
-  assert.strictEqual(cvConfig.fileName, "Nabil-Dawud-CV.pdf");
-  assert.strictEqual(typeof cvConfig.filePath, "string");
-  assert.strictEqual(cvConfig.filePath, "/assets/cv/nabil-dawud-cv.pdf");
+  assert.strictEqual(cvConfig.statusMessage.en, "CV available upon request");
+  assert.strictEqual(cvConfig.statusMessage.ar, "السيرة الذاتية متاحة عند الطلب");
 
-  // Verify the PDF asset exists on disk at the public path
-  const expectedPdfPath = path.join(process.cwd(), "public", cvConfig.filePath);
+  // Verify that public PDF asset does NOT exist on disk
+  const publicPdfPath = path.join(process.cwd(), "public", "assets", "cv", "nabil-dawud-cv.pdf");
   assert.strictEqual(
-    fs.existsSync(expectedPdfPath),
-    true,
-    `Production CV PDF must exist at '${expectedPdfPath}'`
+    fs.existsSync(publicPdfPath),
+    false,
+    `Production CV PDF must NOT exist publicly at '${publicPdfPath}'`
   );
 });

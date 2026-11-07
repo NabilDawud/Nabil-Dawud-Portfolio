@@ -3,19 +3,20 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, FileDown, FileText } from "lucide-react";
+import { Menu, FileText } from "lucide-react";
 import { useLanguage } from "@/i18n";
-import { cvConfig } from "@/data";
 import { BrandMark } from "../brand/BrandMark";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { MobileNav } from "./MobileNav";
+import { CVRequestModal } from "../cv/CVRequestModal";
 import { Button } from "../ui/Button";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
-  const { t, l } = useLanguage();
+  const { t } = useLanguage();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [cvModalOpen, setCvModalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -26,6 +27,12 @@ export function Navbar() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleOpenCV = () => setCvModalOpen(true);
+    window.addEventListener("open-cv-request", handleOpenCV);
+    return () => window.removeEventListener("open-cv-request", handleOpenCV);
   }, []);
 
   const navItems = [
@@ -86,28 +93,16 @@ export function Navbar() {
           <div className="flex items-center gap-2.5 sm:gap-3">
             <LanguageSwitcher />
 
-            {/* Centralized CV Button State */}
-            {cvConfig.isAvailable ? (
-              <Button
-                href={cvConfig.filePath}
-                download={cvConfig.fileName}
-                variant="outline"
-                size="sm"
-                className="hidden lg:inline-flex text-xs font-semibold gap-1.5"
-              >
-                <FileDown className="w-3.5 h-3.5 text-champagne" />
-                <span>{t.nav.downloadCv}</span>
-              </Button>
-            ) : (
-              <div
-                className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-border-subtle bg-graphite/40 text-sand text-xs font-medium cursor-default select-none opacity-80"
-                title={l(cvConfig.statusMessage)}
-                aria-label={l(cvConfig.statusMessage)}
-              >
-                <FileText className="w-3.5 h-3.5 text-champagne/60 shrink-0" />
-                <span>{l(cvConfig.statusMessage)}</span>
-              </div>
-            )}
+            {/* Centralized CV Action */}
+            <Button
+              onClick={() => setCvModalOpen(true)}
+              variant="outline"
+              size="sm"
+              className="hidden lg:inline-flex text-xs font-semibold gap-1.5"
+            >
+              <FileText className="w-3.5 h-3.5 text-champagne" />
+              <span>{t.nav.requestCv || t.nav.downloadCv}</span>
+            </Button>
 
             {/* Mobile Menu Hamburger with Ref for Focus Restoration */}
             <button
@@ -128,8 +123,18 @@ export function Navbar() {
       <MobileNav
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
+        onRequestCV={() => {
+          setMobileMenuOpen(false);
+          setCvModalOpen(true);
+        }}
         navItems={navItems}
         triggerRef={triggerRef}
+      />
+
+      {/* Single Accessible CV Request Modal Instance */}
+      <CVRequestModal
+        isOpen={cvModalOpen}
+        onClose={() => setCvModalOpen(false)}
       />
     </>
   );

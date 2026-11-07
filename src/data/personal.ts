@@ -18,19 +18,15 @@ export interface PersonalBrand {
 }
 
 export interface CVConfig {
-  fileName: string;
-  filePath: string;
   isAvailable: boolean;
   statusMessage: Localized;
 }
 
 export const cvConfig: CVConfig = {
-  fileName: "Nabil-Dawud-CV.pdf",
-  filePath: "/assets/cv/nabil-dawud-cv.pdf",
-  isAvailable: true,
+  isAvailable: false,
   statusMessage: {
-    en: "CV available for download",
-    ar: "السيرة الذاتية متاحة للتحميل",
+    en: "CV available upon request",
+    ar: "السيرة الذاتية متاحة عند الطلب",
   },
 };
 
