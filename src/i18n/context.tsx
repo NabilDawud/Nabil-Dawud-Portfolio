@@ -54,22 +54,6 @@ export function LanguageProvider({
     setLocaleState(initialLocale);
   }
 
-  // Synchronize with client-side localStorage preference after initial hydration
-  useEffect(() => {
-    try {
-      const savedLocale = localStorage.getItem(STORAGE_KEY) as Locale | null;
-      if (savedLocale === "en" || savedLocale === "ar") {
-        if (savedLocale !== initialLocale) {
-          queueMicrotask(() => {
-            setLocaleState(savedLocale);
-          });
-        }
-      }
-    } catch {
-      // LocalStorage access might fail in restricted or private browsing
-    }
-  }, [initialLocale]);
-
   const direction = useMemo(() => getDirection(locale), [locale]);
   const rtl = useMemo(() => isRTL(locale), [locale]);
   const dictionary = useMemo(() => dictionaries[locale], [locale]);

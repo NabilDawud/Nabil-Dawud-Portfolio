@@ -5,7 +5,7 @@ import path from "node:path";
 import puppeteer from "puppeteer-core";
 
 const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3333";
 
 test("Task 1 (Reduced Motion Contract): globals.css respects prefers-reduced-motion: reduce", () => {
   const cssPath = path.resolve(process.cwd(), "src/app/globals.css");
@@ -87,12 +87,7 @@ test("Task 2 (Reduced Motion Browser QA): In-browser verification across EN/LTR 
     assert.strictEqual(enReducedMetrics.dir, "ltr");
 
     // 3. REDUCED MOTION PREFERENCES (Arabic RTL)
-    await page.setCookie({ name: "NEXT_LOCALE", value: "ar", domain: "localhost" });
-    await page.goto(`${BASE_URL}/`, { waitUntil: "domcontentloaded" });
-    await page.evaluate(() => {
-      try { localStorage.setItem("nabildawud_portfolio_locale", "ar"); } catch {}
-    });
-    await page.reload({ waitUntil: "domcontentloaded" });
+    await page.goto(`${BASE_URL}/ar`, { waitUntil: "domcontentloaded" });
 
     const arReducedMetrics = await page.evaluate(() => {
       const htmlStyle = window.getComputedStyle(document.documentElement);

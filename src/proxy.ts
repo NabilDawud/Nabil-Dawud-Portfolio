@@ -30,21 +30,7 @@ export function proxy(request: NextRequest) {
     });
   }
 
-  // 4. For clean URLs without explicit /ar prefix:
-  // If user has active Arabic cookie preference, rewrite to /ar segment
-  const cookieLocale = request.cookies.get("NEXT_LOCALE")?.value;
-  if (cookieLocale === "ar") {
-    const url = request.nextUrl.clone();
-    url.pathname = `/ar${pathname === "/" ? "" : pathname}`;
-    requestHeaders.set("x-locale", "ar");
-    return NextResponse.rewrite(url, {
-      request: {
-        headers: requestHeaders,
-      },
-    });
-  }
-
-  // 5. Default English clean URLs (/, /about, /projects, /contact, /projects/*),
+  // 4. Default English clean URLs (/, /about, /projects, /contact, /projects/*),
   // rewrite internally to /en/... so Next.js matches app/[locale]/*
   const url = request.nextUrl.clone();
   url.pathname = `/en${pathname === "/" ? "" : pathname}`;

@@ -153,4 +153,15 @@ test("SEO Contract Gate 10: Next.js 16 proxy rewrite, redirect, and header sanit
   const arReq = new NextRequest("https://nabil-dawud.vercel.app/ar/about");
   const arRes = proxy(arReq);
   assert.strictEqual(arRes?.headers.get("x-middleware-rewrite"), null, "Arabic requests should not rewrite internally");
+
+  // 5. Clean URL with NEXT_LOCALE=ar cookie still rewrites to English (English default enforced)
+  const cookieReq = new NextRequest("https://nabil-dawud.vercel.app/", {
+    headers: { cookie: "NEXT_LOCALE=ar" },
+  });
+  const cookieRes = proxy(cookieReq);
+  assert.strictEqual(
+    cookieRes?.headers.get("x-middleware-rewrite"),
+    "https://nabil-dawud.vercel.app/en",
+    "Clean root / must rewrite to /en regardless of NEXT_LOCALE cookie"
+  );
 });

@@ -8,7 +8,7 @@ import { enDictionary } from "@/i18n/dictionaries/en";
 import { arDictionary } from "@/i18n/dictionaries/ar";
 
 const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3333";
 
 test("CV Request UI Contract: Availability disabled & Public Asset Removed", async () => {
   // 1. Direct download must be disabled
@@ -248,11 +248,7 @@ test("CV Request UI Contract: In-Browser Verification across Hero, Navbar, Mobil
     assert.strictEqual(modalAfterClose, false);
 
     // 2. Desktop Arabic
-    await page.evaluate(() => {
-      localStorage.setItem("nabildawud_portfolio_locale", "ar");
-    });
-    await page.setCookie({ name: "NEXT_LOCALE", value: "ar", domain: "localhost" });
-    await page.reload({ waitUntil: "networkidle0" });
+    await page.goto(`${BASE_URL}/ar`, { waitUntil: "networkidle0" });
 
     const heroBtnAr = await page.evaluate(() => {
       const btns = Array.from(document.querySelectorAll("section button"));

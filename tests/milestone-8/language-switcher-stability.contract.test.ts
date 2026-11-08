@@ -3,7 +3,7 @@ import assert from "node:assert";
 import puppeteer from "puppeteer-core";
 
 const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3333";
 
 test("Language Switcher Stability Regression: Toggling with pre-existing localStorage does not trigger infinite oscillation or hang", async () => {
   const browser = await puppeteer.launch({
