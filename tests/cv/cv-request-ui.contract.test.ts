@@ -282,6 +282,13 @@ test("CV Request UI Contract: In-Browser Verification across Hero, Navbar, Mobil
     });
     assert.strictEqual(mobileCvAr, "طلب السيرة الذاتية");
 
+    // Verify #section is completely absent from mobile menu
+    const hasSectionTag = await page.evaluate(() => {
+      const dialog = document.querySelector('div[role="dialog"]');
+      return dialog?.textContent?.includes("#section") || false;
+    });
+    assert.strictEqual(hasSectionTag, false, "Mobile drawer must not display #section tags");
+
     // Click mobile Request CV button
     await page.evaluate(() => {
       const dialog = document.querySelector('div[role="dialog"]');

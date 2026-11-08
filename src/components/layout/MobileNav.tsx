@@ -145,15 +145,10 @@ export function MobileNav({
                 href={localizePath(item.href, locale)}
                 onClick={onClose}
                 className={cn(
-                  "px-4 py-3 rounded-xl text-base font-medium text-ivory hover:text-champagne hover:bg-graphite-elevated border border-transparent hover:border-border-subtle/50 transition-all flex items-center justify-between"
+                  "px-4 py-3 rounded-xl text-base font-medium text-ivory hover:text-champagne hover:bg-graphite-elevated border border-transparent hover:border-border-subtle/50 transition-all flex items-center"
                 )}
               >
                 <span>{item.label}</span>
-                {item.isAnchor && (
-                  <span className="text-[10px] uppercase tracking-wider text-muted font-mono opacity-60">
-                    #section
-                  </span>
-                )}
               </Link>
             ))}
           </nav>
@@ -162,7 +157,7 @@ export function MobileNav({
         {/* Footer Actions */}
         <div className="pt-6 border-t border-border-subtle space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-sand">Language</span>
+            <span className="text-xs text-sand">{locale === "ar" ? "اللغة" : "Language"}</span>
             <LanguageSwitcher />
           </div>
 
