@@ -10,6 +10,7 @@ export const enDictionary = {
     downloadCv: "Request CV",
     requestCv: "Request CV",
     switchLanguage: "عربي",
+    language: "Language",
     openMenu: "Open navigation menu",
     closeMenu: "Close navigation menu",
   },

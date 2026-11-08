@@ -157,7 +157,7 @@ export function MobileNav({
         {/* Footer Actions */}
         <div className="pt-6 border-t border-border-subtle space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-sand">{locale === "ar" ? "اللغة" : "Language"}</span>
+            <span className="text-xs text-sand">{t.nav.language}</span>
             <LanguageSwitcher />
           </div>
 

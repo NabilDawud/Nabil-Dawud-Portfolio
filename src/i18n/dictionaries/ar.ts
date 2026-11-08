@@ -12,6 +12,7 @@ export const arDictionary: Dictionary = {
     downloadCv: "طلب السيرة الذاتية",
     requestCv: "طلب السيرة الذاتية",
     switchLanguage: "English",
+    language: "اللغة",
     openMenu: "فتح قائمة التنقل",
     closeMenu: "إغلاق قائمة التنقل",
   },

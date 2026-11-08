@@ -8,7 +8,7 @@ import { enDictionary } from "@/i18n/dictionaries/en";
 import { arDictionary } from "@/i18n/dictionaries/ar";
 
 const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3333";
+const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3000";
 
 test("CV Request UI Contract: Availability disabled & Public Asset Removed", async () => {
   // 1. Direct download must be disabled

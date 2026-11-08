@@ -5,7 +5,7 @@ import path from "node:path";
 import puppeteer from "puppeteer-core";
 
 const CHROME_PATH = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
-const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3333";
+const BASE_URL = process.env.TEST_BASE_URL || "http://localhost:3000";
 
 test("Task 1 (Reduced Motion Contract): globals.css respects prefers-reduced-motion: reduce", () => {
   const cssPath = path.resolve(process.cwd(), "src/app/globals.css");
