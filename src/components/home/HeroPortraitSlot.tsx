@@ -6,6 +6,8 @@ import { motion } from "motion/react";
 import { useLanguage } from "@/i18n";
 import { personalBrand } from "@/data/personal";
 import { useInteractiveMotion } from "@/hooks/useInteractiveMotion";
+import { HeroOrbitalRing } from "./HeroOrbitalRing";
+import { HeroFloatingBadges } from "./HeroFloatingBadges";
 
 interface HeroPortraitSlotProps {
   className?: string;
@@ -22,11 +24,17 @@ export function HeroPortraitSlot({ className = "" }: HeroPortraitSlotProps) {
 
   return (
     <div className="relative group/portrait">
+      {/* 360° Circular Orbiting Satellite Telemetry */}
+      <HeroOrbitalRing />
+
       {/* Dynamic ambient rim glow */}
       <div
-        className="absolute -inset-1.5 rounded-[2rem] bg-gradient-to-r from-champagne/25 via-teal/20 to-champagne/25 blur-xl opacity-60 group-hover/portrait:opacity-90 transition-opacity duration-700 pointer-events-none"
+        className="absolute -inset-1.5 rounded-[2rem] bg-gradient-to-r from-champagne/30 via-teal/25 to-champagne/30 blur-xl opacity-65 group-hover/portrait:opacity-100 transition-opacity duration-700 pointer-events-none"
         aria-hidden="true"
       />
+
+      {/* Floating Architectural Proof Badges */}
+      <HeroFloatingBadges />
 
       <motion.div
         animate={canAnimate ? { y: [-5, 5] } : undefined}

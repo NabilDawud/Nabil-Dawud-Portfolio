@@ -25,8 +25,8 @@ export function AmbientSpotlight({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Relaxed spring physics for buttery-smooth mouse tracking
-  const springConfig = { damping: 35, stiffness: 90, mass: 0.6 };
+  // Ultra-responsive spring physics: zero lag, snappy cursor tracking
+  const springConfig = { damping: 24, stiffness: 480, mass: 0.08 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
@@ -77,11 +77,11 @@ export function AmbientSpotlight({
       {/* ------------------------------------------------------------- */}
       {showGrid && (
         <div
-          className="absolute inset-0 opacity-40 transition-opacity duration-700"
+          className="absolute inset-0 opacity-55 transition-opacity duration-500"
           style={{
             backgroundImage: `
-              linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px)
+              linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px)
             `,
             backgroundSize: "36px 36px",
             maskImage:
@@ -102,12 +102,12 @@ export function AmbientSpotlight({
       {/* Orb 1: Rich Champagne Gold Luminous Flow */}
       <motion.div
         animate={{
-          x: isHero ? [0, 85, -65, 35, 0] : [0, 50, -40, 20, 0],
-          y: isHero ? [0, -55, 45, -30, 0] : [0, -35, 30, -15, 0],
-          scale: [1, 1.15, 0.94, 1.08, 1],
+          x: isHero ? [0, 95, -75, 40, 0] : [0, 55, -45, 25, 0],
+          y: isHero ? [0, -65, 55, -35, 0] : [0, -40, 35, -20, 0],
+          scale: [1, 1.18, 0.92, 1.1, 1],
         }}
         transition={{
-          duration: isHero ? 18 : 22,
+          duration: isHero ? 16 : 20,
           repeat: Infinity,
           ease: "easeInOut",
         }}
@@ -115,10 +115,10 @@ export function AmbientSpotlight({
           width: isHero ? "650px" : "480px",
           height: isHero ? "650px" : "480px",
           background:
-            "radial-gradient(circle at center, rgba(212, 175, 55, 0.26) 0%, rgba(212, 175, 55, 0.12) 42%, transparent 72%)",
+            "radial-gradient(circle at center, rgba(240, 205, 95, 0.42) 0%, rgba(212, 175, 55, 0.25) 38%, rgba(183, 164, 119, 0.12) 58%, transparent 75%)",
         }}
         className={cn(
-          "absolute rounded-full blur-3xl mix-blend-screen will-change-transform",
+          "absolute rounded-full blur-2xl mix-blend-screen will-change-transform",
           isHero ? "top-1/4 start-1/6" : "top-1/6 start-1/4"
         )}
       />
@@ -126,12 +126,12 @@ export function AmbientSpotlight({
       {/* Orb 2: Cyber Teal / Emerald Counter-Balance */}
       <motion.div
         animate={{
-          x: isHero ? [0, -75, 55, -40, 0] : [0, -45, 35, -20, 0],
-          y: isHero ? [0, 65, -45, 35, 0] : [0, 40, -30, 25, 0],
-          scale: [0.95, 1.18, 0.98, 1.12, 0.95],
+          x: isHero ? [0, -85, 65, -45, 0] : [0, -50, 40, -25, 0],
+          y: isHero ? [0, 75, -55, 40, 0] : [0, 45, -35, 25, 0],
+          scale: [0.94, 1.2, 0.96, 1.14, 0.94],
         }}
         transition={{
-          duration: isHero ? 22 : 26,
+          duration: isHero ? 20 : 24,
           repeat: Infinity,
           ease: "easeInOut",
         }}
@@ -139,10 +139,10 @@ export function AmbientSpotlight({
           width: isHero ? "580px" : "440px",
           height: isHero ? "580px" : "440px",
           background:
-            "radial-gradient(circle at center, rgba(88, 184, 176, 0.22) 0%, rgba(88, 184, 176, 0.08) 48%, transparent 72%)",
+            "radial-gradient(circle at center, rgba(88, 215, 205, 0.36) 0%, rgba(45, 212, 191, 0.22) 42%, rgba(20, 184, 166, 0.08) 60%, transparent 75%)",
         }}
         className={cn(
-          "absolute rounded-full blur-3xl mix-blend-screen will-change-transform",
+          "absolute rounded-full blur-2xl mix-blend-screen will-change-transform",
           isHero ? "top-1/3 end-1/6" : "top-1/2 end-1/4"
         )}
       />
@@ -159,10 +159,10 @@ export function AmbientSpotlight({
             height: `${size}px`,
             opacity: hasMoved ? 1 : 0,
             background:
-              "radial-gradient(circle at center, rgba(255, 230, 160, 0.32) 0%, rgba(212, 175, 55, 0.18) 38%, rgba(88, 184, 176, 0.08) 62%, transparent 78%)",
+              "radial-gradient(circle at center, rgba(255, 240, 180, 0.52) 0%, rgba(212, 175, 55, 0.3) 32%, rgba(88, 215, 205, 0.15) 58%, transparent 76%)",
           }}
-          transition={{ opacity: { duration: 0.5 } }}
-          className="absolute top-0 left-0 rounded-full blur-2xl mix-blend-screen will-change-transform"
+          transition={{ opacity: { duration: 0.3 } }}
+          className="absolute top-0 left-0 rounded-full blur-xl mix-blend-screen will-change-transform"
         />
       )}
     </div>

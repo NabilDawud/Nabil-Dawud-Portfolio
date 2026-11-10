@@ -28,6 +28,11 @@ export const arDictionary: Dictionary = {
     letsConnect: "لنتواصل معاً",
     location: "غزة، فلسطين",
     portraitAlt: "صورة شخصية للمهندس نبيل داود",
+    floatingBadges: {
+      latency: "<120ms زمن الاستجابة",
+      security: "عزل أمني للبيانات",
+      sync: "مزامنة بلا اتصال",
+    },
   },
   metrics: {
     sectionLabel: "مؤشرات أداء الأنظمة",

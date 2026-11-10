@@ -7,3 +7,5 @@ export * from "./JourneyPreviewSection";
 export * from "./EducationPreviewSection";
 export * from "./ContactCtaSection";
 export * from "./SystemMetricsRibbon";
+export * from "./HeroOrbitalRing";
+export * from "./HeroFloatingBadges";

@@ -26,6 +26,11 @@ export const enDictionary = {
     letsConnect: "Let's Connect",
     location: "Gaza, Palestine",
     portraitAlt: "Portrait of Nabil Dawud, Software Engineer",
+    floatingBadges: {
+      latency: "<120ms p95 API",
+      security: "Multi-Tenant RBAC",
+      sync: "Offline-First Sync",
+    },
   },
   metrics: {
     sectionLabel: "System Performance Metrics",
