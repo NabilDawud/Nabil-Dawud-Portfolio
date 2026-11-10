@@ -30,7 +30,7 @@ test("Task 4: Hero Animations SSR Safety Contract", () => {
   ]);
 
   const enMarkup = renderToStaticMarkup(
-    React.createElement(LanguageProvider, { initialLocale: "en", children: enChildren })
+    React.createElement(LanguageProvider, { initialLocale: "en" } as never, enChildren)
   );
 
   assert.ok(
@@ -44,7 +44,7 @@ test("Task 4: Hero Animations SSR Safety Contract", () => {
   ]);
 
   const arMarkup = renderToStaticMarkup(
-    React.createElement(LanguageProvider, { initialLocale: "ar", children: arChildren })
+    React.createElement(LanguageProvider, { initialLocale: "ar" } as never, arChildren)
   );
 
   assert.ok(
