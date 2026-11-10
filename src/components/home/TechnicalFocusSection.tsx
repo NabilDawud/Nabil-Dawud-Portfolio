@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/i18n";
 import { Badge } from "../ui/Badge";
-import { SpotlightCard } from "../ui";
+import { SpotlightCard, AmbientSpotlight } from "../ui";
 
 interface CapabilityCard {
   id: string;
@@ -203,8 +203,10 @@ export function TechnicalFocusSection() {
     <section
       id="focus"
       aria-labelledby="focus-heading"
-      className="py-20 md:py-28 relative scroll-mt-24 border-t border-border-subtle/40"
+      className="py-20 md:py-28 relative scroll-mt-24 border-t border-border-subtle/40 overflow-hidden"
     >
+      {/* Living Aurora & Interactive Cyber-Grid Atmosphere */}
+      <AmbientSpotlight variant="bento" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl space-y-4 mb-14 text-start">

@@ -39,7 +39,7 @@ export function HeroSection() {
                 className="font-display font-extrabold text-4xl sm:text-5xl lg:text-6xl tracking-tight text-ivory leading-[1.12]"
               >
                 <span className="block text-ivory">{t.hero.headlineLead}</span>
-                <span className="block bg-gradient-to-r from-champagne-bright via-champagne to-champagne/70 bg-clip-text text-transparent">
+                <span className="block py-1 bg-gradient-to-r from-champagne-bright via-[#FFF5DC] to-champagne bg-clip-text text-transparent animate-text-shimmer select-none will-change-[background-position] leading-[1.2]">
                   {t.hero.headlineAccent}
                 </span>
               </h1>

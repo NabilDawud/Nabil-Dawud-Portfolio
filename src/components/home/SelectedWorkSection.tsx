@@ -6,7 +6,7 @@ import { useLanguage } from "@/i18n";
 import { projects } from "@/data/projects";
 import { Badge } from "../ui/Badge";
 import { Button } from "../ui/Button";
-import { MagneticButton } from "../ui";
+import { MagneticButton, AmbientSpotlight } from "../ui";
 import { ProjectCard } from "./ProjectCard";
 import { cn } from "@/lib/utils";
 
@@ -24,8 +24,10 @@ export function SelectedWorkSection() {
     <section
       id="selected-work"
       aria-labelledby="selected-work-heading"
-      className="py-20 md:py-28 relative scroll-mt-24 border-t border-border-subtle/40"
+      className="py-20 md:py-28 relative scroll-mt-24 border-t border-border-subtle/40 overflow-hidden"
     >
+      {/* Living Aurora & Interactive Cyber-Grid Atmosphere */}
+      <AmbientSpotlight variant="bento" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl space-y-4 mb-14 text-start">

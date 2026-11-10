@@ -69,6 +69,21 @@ body {
   background: #B7A477;
 }
 
+/* Animated metallic text shimmer */
+@keyframes textShimmer {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+.animate-text-shimmer {
+  background-size: 200% auto;
+  animation: textShimmer 6s linear infinite;
+}
+
 /* Accessibility: Respect prefers-reduced-motion (WCAG 2.2 AA SC 2.3.3) */
 @media (prefers-reduced-motion: reduce) {
   html {

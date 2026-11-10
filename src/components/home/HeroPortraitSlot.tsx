@@ -2,8 +2,10 @@
 
 import React from "react";
 import Image from "next/image";
+import { motion } from "motion/react";
 import { useLanguage } from "@/i18n";
 import { personalBrand } from "@/data/personal";
+import { useInteractiveMotion } from "@/hooks/useInteractiveMotion";
 
 interface HeroPortraitSlotProps {
   className?: string;
@@ -16,12 +18,31 @@ interface HeroPortraitSlotProps {
  */
 export function HeroPortraitSlot({ className = "" }: HeroPortraitSlotProps) {
   const { t, l, locale } = useLanguage();
+  const canAnimate = useInteractiveMotion();
 
   return (
-    <div
-      className={`relative w-full max-w-sm sm:max-w-md mx-auto aspect-square rounded-3xl border border-border-subtle/80 bg-gradient-to-b from-graphite/60 via-graphite/30 to-obsidian p-6 sm:p-8 flex flex-col items-center justify-between shadow-2xl shadow-black/80 backdrop-blur-sm overflow-hidden select-none group ${className}`}
-      aria-label={t.hero.portraitAlt}
-    >
+    <div className="relative group/portrait">
+      {/* Dynamic ambient rim glow */}
+      <div
+        className="absolute -inset-1.5 rounded-[2rem] bg-gradient-to-r from-champagne/25 via-teal/20 to-champagne/25 blur-xl opacity-60 group-hover/portrait:opacity-90 transition-opacity duration-700 pointer-events-none"
+        aria-hidden="true"
+      />
+
+      <motion.div
+        animate={canAnimate ? { y: [-5, 5] } : undefined}
+        transition={
+          canAnimate
+            ? {
+                duration: 6,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+              }
+            : undefined
+        }
+        className={`relative w-full max-w-sm sm:max-w-md mx-auto aspect-square rounded-3xl border border-border-subtle/80 bg-gradient-to-b from-graphite/60 via-graphite/30 to-obsidian p-6 sm:p-8 flex flex-col items-center justify-between shadow-2xl shadow-black/80 backdrop-blur-sm overflow-hidden select-none will-change-transform group ${className}`}
+        aria-label={t.hero.portraitAlt}
+      >
       {/* Background portrait image with responsive fill */}
       <Image
         src="/assets/images/nabil-dawud-portrait.webp"
@@ -71,6 +92,7 @@ export function HeroPortraitSlot({ className = "" }: HeroPortraitSlotProps) {
           {l(personalBrand.title)}
         </div>
       </div>
-    </div>
+    </motion.div>
+  </div>
   );
 }
