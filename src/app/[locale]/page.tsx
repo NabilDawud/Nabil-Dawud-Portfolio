@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { defaultOgImages, SITE_URL } from "@/lib/seo";
 import {
   HeroSection,
+  SystemMetricsRibbon,
   TechnicalFocusSection,
   SelectedWorkSection,
   JourneyPreviewSection,
@@ -39,6 +40,9 @@ export default function Home() {
     <main className="flex-1 flex flex-col w-full">
       {/* 1. Hero Section with Live Status & Modular Portrait Slot */}
       <HeroSection />
+
+      {/* 1.5. System Performance & Impact Proof Ribbon */}
+      <SystemMetricsRibbon />
 
       {/* 2. Technical Focus Section (#focus) */}
       <TechnicalFocusSection />

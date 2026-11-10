@@ -4,6 +4,7 @@ import React from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useLanguage } from "@/i18n";
 import { Button } from "../ui/Button";
+import { MagneticButton } from "../ui";
 
 export function ContactCtaSection() {
   const { locale, isRTL } = useLanguage();
@@ -60,12 +61,14 @@ export function ContactCtaSection() {
             </p>
           </div>
 
-          {/* Single Primary Action linking directly to /contact */}
+          {/* Single Primary Action linking directly to /contact with Magnetic micro-interaction */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <Button href="/contact" variant="primary" size="lg" className="w-full sm:w-auto gap-2">
-              <span>{locale === "en" ? "Initiate Contact" : "ابدأ التواصل"}</span>
-              <ArrowRight className={isRTL ? "w-4 h-4 rotate-180" : "w-4 h-4"} />
-            </Button>
+            <MagneticButton className="w-full sm:w-auto">
+              <Button href="/contact" variant="primary" size="lg" className="w-full sm:w-auto gap-2">
+                <span>{locale === "en" ? "Initiate Contact" : "ابدأ التواصل"}</span>
+                <ArrowRight className={isRTL ? "w-4 h-4 rotate-180" : "w-4 h-4"} />
+              </Button>
+            </MagneticButton>
           </div>
         </div>
       </div>

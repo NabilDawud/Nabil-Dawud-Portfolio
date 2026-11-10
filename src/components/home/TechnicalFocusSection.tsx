@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useLanguage } from "@/i18n";
 import { Badge } from "../ui/Badge";
+import { SpotlightCard } from "../ui";
 
 interface CapabilityCard {
   id: string;
@@ -23,6 +24,7 @@ interface CapabilityCard {
     ar: Array<{ label: string; project?: string }>;
   };
   technologies: string[];
+  bentoSpan?: string;
 }
 
 const capabilities: CapabilityCard[] = [
@@ -48,6 +50,7 @@ const capabilities: CapabilityCard[] = [
       ],
     },
     technologies: ["Laravel 13", "PHP 8.4", "REST APIs", "Service Layer"],
+    bentoSpan: "lg:col-span-8",
   },
   {
     id: "auth-systems",
@@ -77,6 +80,7 @@ const capabilities: CapabilityCard[] = [
       ],
     },
     technologies: ["JWT", "OAuth 2.0", "Better Auth", "Multi-Role Views", "Sanctum"],
+    bentoSpan: "lg:col-span-4",
   },
   {
     id: "databases-modeling",
@@ -102,6 +106,7 @@ const capabilities: CapabilityCard[] = [
       ],
     },
     technologies: ["MySQL", "PostgreSQL", "SQLite (Testing)", "Prisma ORM"],
+    bentoSpan: "lg:col-span-4",
   },
   {
     id: "resilient-systems",
@@ -128,6 +133,7 @@ const capabilities: CapabilityCard[] = [
       "Offline Resiliency",
       "FrankenPHP",
     ],
+    bentoSpan: "lg:col-span-8",
   },
   {
     id: "fullstack-tooling",
@@ -157,6 +163,7 @@ const capabilities: CapabilityCard[] = [
       "Dokku",
       "Alpine.js",
     ],
+    bentoSpan: "lg:col-span-6",
   },
   {
     id: "ai-workflow",
@@ -185,6 +192,7 @@ const capabilities: CapabilityCard[] = [
       "Antigravity",
       "TDD Test Suites",
     ],
+    bentoSpan: "lg:col-span-6",
   },
 ];
 
@@ -214,29 +222,31 @@ export function TechnicalFocusSection() {
           </p>
         </div>
 
-        {/* 6 Capabilities Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+        {/* Bento Grid Architecture with Magic Card Spotlights */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-7">
           {capabilities.map((cap) => {
             const Icon = cap.icon;
             const demonstrated = l(cap.demonstratedIn);
 
             return (
-              <div
+              <SpotlightCard
                 key={cap.id}
-                className="group relative rounded-2xl border border-border-subtle/80 bg-graphite/40 hover:bg-graphite/70 p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:border-champagne/40 hover:shadow-xl hover:shadow-black/60"
+                className={`p-6 sm:p-8 flex flex-col justify-between hover:border-champagne/40 hover:shadow-xl hover:shadow-black/60 ${cap.bentoSpan || "lg:col-span-4"}`}
+                spotlightColor="rgba(212, 175, 55, 0.12)"
+                borderColor="rgba(212, 175, 55, 0.35)"
               >
                 <div className="space-y-5">
                   {/* Icon & Anchor Indicator */}
                   <div className="flex items-center justify-between">
-                    <div className="w-11 h-11 rounded-xl bg-graphite-elevated border border-border-subtle flex items-center justify-center text-champagne group-hover:scale-105 group-hover:border-champagne/40 transition-all duration-200">
-                      <Icon className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-xl bg-graphite-elevated border border-border-subtle flex items-center justify-center text-champagne group-hover:scale-105 group-hover:border-champagne/40 transition-all duration-200 shadow-sm">
+                      <Icon className="w-6 h-6" />
                     </div>
                     <ArrowUpRight className="w-4 h-4 text-sand/40 group-hover:text-champagne transition-colors" />
                   </div>
 
                   {/* Title & Description */}
                   <div className="space-y-2.5">
-                    <h3 className="font-display font-semibold text-lg text-ivory group-hover:text-champagne-bright transition-colors">
+                    <h3 className="font-display font-semibold text-xl text-ivory group-hover:text-champagne-bright transition-colors">
                       {l(cap.title)}
                     </h3>
                     <p className="text-sm text-sand leading-relaxed">
@@ -245,7 +255,7 @@ export function TechnicalFocusSection() {
                   </div>
 
                   {/* Demonstrated In Evidence */}
-                  <div className="space-y-2 pt-2 border-t border-border-subtle/50">
+                  <div className="space-y-2 pt-3 border-t border-border-subtle/50">
                     <div className="text-[11px] font-mono uppercase tracking-wider text-sand/60">
                       {t.focus.verifiedIn}
                     </div>
@@ -274,7 +284,7 @@ export function TechnicalFocusSection() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </SpotlightCard>
             );
           })}
         </div>

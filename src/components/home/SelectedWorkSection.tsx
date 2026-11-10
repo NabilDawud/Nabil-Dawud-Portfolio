@@ -6,7 +6,9 @@ import { useLanguage } from "@/i18n";
 import { projects } from "@/data/projects";
 import { Badge } from "../ui/Badge";
 import { Button } from "../ui/Button";
+import { MagneticButton } from "../ui";
 import { ProjectCard } from "./ProjectCard";
+import { cn } from "@/lib/utils";
 
 export function SelectedWorkSection() {
   const { t, locale, isRTL } = useLanguage();
@@ -41,11 +43,23 @@ export function SelectedWorkSection() {
           </p>
         </div>
 
-        {/* 3 Featured Projects Showcase Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {featuredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+        {/* 3 Featured Projects Bento Showcase Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          {featuredProjects.map((project) => {
+            const isMeshwar = project.id === "meshwar";
+            const isMasar = project.id === "masar";
+            const colSpan = isMeshwar
+              ? "lg:col-span-8"
+              : isMasar
+              ? "lg:col-span-4"
+              : "lg:col-span-12";
+
+            return (
+              <div key={project.id} className={cn(colSpan, "h-full")}>
+                <ProjectCard project={project} isHero={isMeshwar} />
+              </div>
+            );
+          })}
         </div>
 
         {/* View All Projects CTA Banner */}
@@ -63,10 +77,12 @@ export function SelectedWorkSection() {
             </p>
           </div>
 
-          <Button href="/projects" variant="outline" size="md" className="shrink-0 gap-2">
-            <span>{t.projects.viewAll}</span>
-            <ArrowRight className={isRTL ? "w-4 h-4 rotate-180" : "w-4 h-4"} />
-          </Button>
+          <MagneticButton>
+            <Button href="/projects" variant="outline" size="md" className="shrink-0 gap-2">
+              <span>{t.projects.viewAll}</span>
+              <ArrowRight className={isRTL ? "w-4 h-4 rotate-180" : "w-4 h-4"} />
+            </Button>
+          </MagneticButton>
         </div>
       </div>
     </section>

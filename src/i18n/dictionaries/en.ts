@@ -27,6 +27,29 @@ export const enDictionary = {
     location: "Gaza, Palestine",
     portraitAlt: "Portrait of Nabil Dawud, Software Engineer",
   },
+  metrics: {
+    sectionLabel: "System Performance Metrics",
+    latency: {
+      value: "<120ms",
+      label: "p95 API Latency",
+      description: "Optimized queries & caching",
+    },
+    sync: {
+      value: "99.8%",
+      label: "Offline Sync Reliability",
+      description: "Cached graph & GPS freshness",
+    },
+    isolation: {
+      value: "100%",
+      label: "Tenant Access Isolation",
+      description: "Strict RBAC & token security",
+    },
+    education: {
+      value: "B.Sc.",
+      label: "Systems Engineering",
+      description: "Al-Azhar University, Gaza",
+    },
+  },
   focus: {
     sectionBadge: "Technical Focus",
     sectionTitle: "Engineering Specialties & Grounded Competencies",

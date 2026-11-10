@@ -6,3 +6,4 @@ export * from "./SelectedWorkSection";
 export * from "./JourneyPreviewSection";
 export * from "./EducationPreviewSection";
 export * from "./ContactCtaSection";
+export * from "./SystemMetricsRibbon";

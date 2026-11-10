@@ -6,6 +6,7 @@ import { useLanguage } from "@/i18n";
 import { personalBrand } from "@/data/personal";
 import { Button } from "../ui/Button";
 import { Badge } from "../ui/Badge";
+import { AmbientSpotlight, MagneticButton } from "../ui";
 import { GithubIcon, LinkedinIcon } from "../brand/SocialIcons";
 import { HeroPortraitSlot } from "./HeroPortraitSlot";
 
@@ -17,11 +18,8 @@ export function HeroSection() {
       aria-labelledby="hero-heading"
       className="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden"
     >
-      {/* Background ambient lighting */}
-      <div
-        className="absolute top-0 start-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-champagne/10 via-graphite/20 to-transparent blur-3xl pointer-events-none -z-10"
-        aria-hidden="true"
-      />
+      {/* Interactive Cursor-Responsive Ambient Lighting */}
+      <AmbientSpotlight />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -56,26 +54,30 @@ export function HeroSection() {
               <span>{t.hero.academicNote}</span>
             </div>
 
-            {/* Action Buttons & CV State */}
+            {/* Action Buttons & CV State with Magnetic Micro-Interactions */}
             <div className="flex flex-wrap items-center gap-4 pt-2">
               {/* Primary CTA linking to #selected-work */}
-              <Button href="#selected-work" variant="primary" size="lg">
-                <span>{t.hero.exploreWork}</span>
-                <ArrowDown className="w-4 h-4 text-obsidian" />
-              </Button>
+              <MagneticButton>
+                <Button href="#selected-work" variant="primary" size="lg">
+                  <span>{t.hero.exploreWork}</span>
+                  <ArrowDown className="w-4 h-4 text-obsidian" />
+                </Button>
+              </MagneticButton>
 
               {/* Centralized CV Action */}
-              <Button
-                onClick={() => {
-                  window.dispatchEvent(new CustomEvent("open-cv-request"));
-                }}
-                variant="outline"
-                size="lg"
-                className="gap-2"
-              >
-                <FileText className="w-4 h-4 text-champagne" />
-                <span>{t.hero.requestCv || t.hero.downloadCv}</span>
-              </Button>
+              <MagneticButton>
+                <Button
+                  onClick={() => {
+                    window.dispatchEvent(new CustomEvent("open-cv-request"));
+                  }}
+                  variant="outline"
+                  size="lg"
+                  className="gap-2"
+                >
+                  <FileText className="w-4 h-4 text-champagne" />
+                  <span>{t.hero.requestCv || t.hero.downloadCv}</span>
+                </Button>
+              </MagneticButton>
             </div>
 
             {/* Social Connectivity Bar */}

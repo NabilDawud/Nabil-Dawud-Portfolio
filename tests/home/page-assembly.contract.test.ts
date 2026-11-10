@@ -8,6 +8,7 @@ test("Task 5 (Part B): Page Assembly and section anchors", () => {
   // 1. All sections must be exported from home index
   assert.strictEqual(typeof HomeComponents.HeroSection, "function");
   assert.strictEqual(typeof HomeComponents.HeroPortraitSlot, "function");
+  assert.strictEqual(typeof HomeComponents.SystemMetricsRibbon, "function");
   assert.strictEqual(typeof HomeComponents.TechnicalFocusSection, "function");
   assert.strictEqual(typeof HomeComponents.SelectedWorkSection, "function");
   assert.strictEqual(typeof HomeComponents.JourneyPreviewSection, "function");
@@ -19,6 +20,7 @@ test("Task 5 (Part B): Page Assembly and section anchors", () => {
   const pageSource = fs.readFileSync(pageSourcePath, "utf-8");
 
   assert.match(pageSource, /<HeroSection\s*\/>/);
+  assert.match(pageSource, /<SystemMetricsRibbon\s*\/>/);
   assert.match(pageSource, /<TechnicalFocusSection\s*\/>/);
   assert.match(pageSource, /<SelectedWorkSection\s*\/>/);
   assert.match(pageSource, /<JourneyPreviewSection\s*\/>/);

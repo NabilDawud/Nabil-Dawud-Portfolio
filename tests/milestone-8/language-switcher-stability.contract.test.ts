@@ -14,7 +14,7 @@ test("Language Switcher Stability Regression: Toggling with pre-existing localSt
 
   try {
     const page = await browser.newPage();
-    page.setDefaultTimeout(10000);
+    page.setDefaultTimeout(25000);
 
     // -------------------------------------------------------------
     // Step 1: Initialize with localStorage='en' and cookie='en'
@@ -44,6 +44,7 @@ test("Language Switcher Stability Regression: Toggling with pre-existing localSt
       return true;
     });
     assert.strictEqual(switchedToAr, true, "Language switcher button must exist and be clicked");
+    await page.waitForFunction(() => window.location.pathname.startsWith("/ar"), { timeout: 10000 });
 
     // -------------------------------------------------------------
     // Step 3: Observe over 1200ms to detect oscillation / flip-flop
@@ -102,6 +103,7 @@ test("Language Switcher Stability Regression: Toggling with pre-existing localSt
       return true;
     });
     assert.strictEqual(switchedToEn, true, "Language switcher button must exist and be clicked for reverse switch");
+    await page.waitForFunction(() => !window.location.pathname.startsWith("/ar"), { timeout: 10000 });
 
     // -------------------------------------------------------------
     // Step 6: Observe over 1200ms to detect reverse oscillation

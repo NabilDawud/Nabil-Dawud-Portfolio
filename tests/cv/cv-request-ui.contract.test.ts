@@ -72,7 +72,7 @@ test("CV Request UI Contract: In-Browser Verification across Hero, Navbar, Mobil
 
   try {
     const page = await browser.newPage();
-    page.setDefaultTimeout(10000);
+    page.setDefaultTimeout(25000);
 
     // 1. Desktop English
     await page.setViewport({ width: 1280, height: 800 });

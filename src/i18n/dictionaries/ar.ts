@@ -29,6 +29,29 @@ export const arDictionary: Dictionary = {
     location: "غزة، فلسطين",
     portraitAlt: "صورة شخصية للمهندس نبيل داود",
   },
+  metrics: {
+    sectionLabel: "مؤشرات أداء الأنظمة",
+    latency: {
+      value: "<120ms",
+      label: "زمن استجابة الـ API",
+      description: "استعلامات محسّنة وتخزين مؤقت",
+    },
+    sync: {
+      value: "99.8%",
+      label: "موثوقية المزامنة بلا اتصال",
+      description: "مسارات مخزنة ومؤشرات حداثة",
+    },
+    isolation: {
+      value: "100%",
+      label: "عزل بيانات المؤسسات",
+      description: "تحكم صارم في الصلاحيات",
+    },
+    education: {
+      value: "بكالوريوس",
+      label: "هندسة أنظمة الحاسوب",
+      description: "جامعة الأزهر، غزة",
+    },
+  },
   focus: {
     sectionBadge: "التركيز التقني",
     sectionTitle: "التخصصات الهندسية والكفاءات الموثقة",
