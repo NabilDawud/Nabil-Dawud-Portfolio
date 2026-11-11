@@ -55,6 +55,8 @@ export function MagneticButton({
   return (
     <motion.div
       ref={ref}
+      data-cursor="hover"
+      data-magnetic="true"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={canAnimate ? { x: springX, y: springY } : undefined}

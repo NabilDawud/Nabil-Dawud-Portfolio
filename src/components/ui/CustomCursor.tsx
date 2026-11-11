@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useInteractiveMotion } from "@/hooks/useInteractiveMotion";
 
 interface Particle {
@@ -20,18 +20,13 @@ const MAX_PARTICLES = 90;
 
 export function CustomCursor() {
   const isInteractive = useInteractiveMotion();
-  const [mounted, setMounted] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const dotRef = useRef<HTMLDivElement | null>(null);
   const lensRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted || !isInteractive) return;
+    if (!isInteractive) return;
 
     const docEl = document.documentElement;
     docEl.classList.add("custom-cursor-active");
@@ -200,10 +195,10 @@ export function CustomCursor() {
       document.removeEventListener("mouseover", onMouseOver);
       docEl.classList.remove("custom-cursor-active");
     };
-  }, [mounted, isInteractive]);
+  }, [isInteractive]);
 
   // Clean unmount or SSR return
-  if (!mounted || !isInteractive) {
+  if (!isInteractive) {
     return null;
   }
 
