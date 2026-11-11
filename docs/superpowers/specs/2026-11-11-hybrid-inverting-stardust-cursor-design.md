@@ -61,10 +61,11 @@ Add an interactive, creative custom cursor experience to the portfolio that elev
   - Automatically queries or delegates hover on `a`, `button`, `[role="button"]`, and elements with `data-cursor="hover"`.
   - On hover: outer lens smoothly expands from `42px` to `76px`.
 - **Particle System:**
-  - Particle class tracking `x, y, vx, vy, size, life, decay, color`.
+  - Fine micro-stardust particles: Small, delicate glowing embers (radii ~1.2px – 2.8px shrinking smoothly to 0.2px) for an elegant, cinematic feel rather than chunky circles.
+  - High emission count: 2–3 micro-particles per gesture step when moving fast, providing noticeable density with refined delicacy.
   - Max pool cap: 90 particles.
-  - Colors: Champagne Gold (`#F0CD5F`) and Cyber Teal (`#58D7CD`) with `shadowBlur: 10`.
-  - Click burst: Spawns 20 radiant embers with radial velocity.
+  - Colors: Champagne Gold (`#F0CD5F`) and Cyber Teal (`#58D7CD`) with concentrated luminescent glow (`shadowBlur: 8`).
+  - Click burst: Spawns 20–22 fine radiant embers with radial velocity.
 - **Global CSS Integration:**
   - When active on fine pointer devices, apply `html.custom-cursor-active, html.custom-cursor-active * { cursor: none !important; }`.
 
