@@ -29,7 +29,6 @@ export function CustomCursor() {
     if (!isInteractive) return;
 
     const docEl = document.documentElement;
-    docEl.classList.add("custom-cursor-active");
 
     const canvas = canvasRef.current;
     const dot = dotRef.current;
@@ -56,6 +55,7 @@ export function CustomCursor() {
     let lastY = 0;
     let isVisible = false;
     let isHovering = false;
+    let isRunning = false;
     let animFrameId: number;
 
     const particles: Particle[] = [];
@@ -63,8 +63,9 @@ export function CustomCursor() {
     const spawnParticle = (x: number, y: number, isBurst = false) => {
       if (particles.length >= MAX_PARTICLES) return;
       const angle = Math.random() * Math.PI * 2;
-      const speed = isBurst ? Math.random() * 4.5 + 1.5 : Math.random() * 1.8 + 0.4;
-      const size = isBurst ? Math.random() * 3.2 + 1.4 : Math.random() * 2.2 + 1.0;
+      const speed = isBurst ? Math.random() * 4.2 + 1.2 : Math.random() * 1.6 + 0.4;
+      // Refined delicate micro-embers: 1.2px - 2.8px
+      const size = Math.random() * 1.6 + 1.2;
 
       particles.push({
         x: x + (Math.random() - 0.5) * 4,
@@ -78,12 +79,24 @@ export function CustomCursor() {
       });
     };
 
+    const startLoop = () => {
+      if (!isRunning && !document.hidden) {
+        isRunning = true;
+        animFrameId = requestAnimationFrame(render);
+      }
+    };
+
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
 
       if (!isVisible) {
         isVisible = true;
+        // Snap coordinates on first entry to prevent fly-in from (-100, -100)
+        circleX = mouseX;
+        circleY = mouseY;
+        lastX = mouseX;
+        lastY = mouseY;
         docEl.classList.add("custom-cursor-active");
       }
 
@@ -98,6 +111,8 @@ export function CustomCursor() {
           spawnParticle(mouseX, mouseY, false);
         }
       }
+
+      startLoop();
     };
 
     const onClick = (e: MouseEvent) => {
@@ -105,16 +120,19 @@ export function CustomCursor() {
       for (let i = 0; i < burstCount; i++) {
         spawnParticle(e.clientX, e.clientY, true);
       }
+      startLoop();
     };
 
     const onMouseEnter = () => {
       isVisible = true;
       docEl.classList.add("custom-cursor-active");
+      startLoop();
     };
 
     const onMouseLeave = () => {
       isVisible = false;
       docEl.classList.remove("custom-cursor-active");
+      startLoop();
     };
 
     // Delegated hover detection for interactive elements
@@ -125,6 +143,16 @@ export function CustomCursor() {
         'a, button, [role="button"], [data-cursor="hover"], .spotlight-card, [data-magnetic]'
       );
       isHovering = Boolean(interactiveEl);
+      startLoop();
+    };
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        isRunning = false;
+        cancelAnimationFrame(animFrameId);
+      } else if (isVisible) {
+        startLoop();
+      }
     };
 
     window.addEventListener("mousemove", onMouseMove, { passive: true });
@@ -132,9 +160,15 @@ export function CustomCursor() {
     document.addEventListener("mouseenter", onMouseEnter);
     document.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("mouseover", onMouseOver, { passive: true });
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
-    // 60fps render loop
+    // 60fps render loop with intelligent idle pausing
     const render = () => {
+      if (document.hidden) {
+        isRunning = false;
+        return;
+      }
+
       // Lerp outer lens circle
       circleX += (mouseX - circleX) * 0.22;
       circleY += (mouseY - circleY) * 0.22;
@@ -146,44 +180,48 @@ export function CustomCursor() {
       dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
       lens.style.transform = `translate3d(${circleX}px, ${circleY}px, 0) translate(-50%, -50%)`;
 
-      if (isHovering) {
-        lens.style.width = "72px";
-        lens.style.height = "72px";
-      } else {
-        lens.style.width = "40px";
-        lens.style.height = "40px";
+      const targetSize = isHovering ? "72px" : "40px";
+      if (lens.style.width !== targetSize) {
+        lens.style.width = targetSize;
+        lens.style.height = targetSize;
       }
 
-      // Draw and update particle canvas
+      // Draw and update particle canvas without redundant save/restore allocations
       ctx.clearRect(0, 0, width, height);
 
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.x += p.speedX;
-        p.y += p.speedY;
-        p.life -= p.decay;
-        if (p.size > 0.3) p.size -= 0.025;
-
-        if (p.life <= 0) {
-          particles.splice(i, 1);
-          continue;
-        }
-
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, p.life);
-        ctx.fillStyle = p.color;
+      if (particles.length > 0) {
         ctx.shadowBlur = 8;
-        ctx.shadowColor = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.x += p.speedX;
+          p.y += p.speedY;
+          p.life -= p.decay;
+          if (p.size > 0.3) p.size -= 0.025;
+
+          if (p.life <= 0) {
+            particles.splice(i, 1);
+            continue;
+          }
+
+          ctx.globalAlpha = Math.max(0, p.life);
+          ctx.fillStyle = p.color;
+          ctx.shadowColor = p.color;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
       }
 
-      animFrameId = requestAnimationFrame(render);
+      // Pause loop when lens has arrived and no particles remain
+      const isMoving = Math.hypot(mouseX - circleX, mouseY - circleY) > 0.3;
+      if (particles.length > 0 || isMoving) {
+        animFrameId = requestAnimationFrame(render);
+      } else {
+        isRunning = false;
+      }
     };
-
-    animFrameId = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(animFrameId);
@@ -193,6 +231,7 @@ export function CustomCursor() {
       document.removeEventListener("mouseenter", onMouseEnter);
       document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mouseover", onMouseOver);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       docEl.classList.remove("custom-cursor-active");
     };
   }, [isInteractive]);
