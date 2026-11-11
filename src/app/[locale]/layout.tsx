@@ -13,6 +13,7 @@ import {
   type Locale,
 } from "@/i18n";
 import { Navbar, Footer } from "@/components/layout";
+import { CustomCursor } from "@/components/ui";
 import { StructuredData } from "@/components/seo/StructuredData";
 import "../globals.css";
 
@@ -130,6 +131,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col bg-obsidian text-ivory selection:bg-champagne/30 selection:text-ivory">
         <StructuredData locale={initialLocale} />
         <LanguageProvider initialLocale={initialLocale}>
+          <CustomCursor />
           <Navbar />
           <div className="flex-1 flex flex-col">{children}</div>
           <Footer />
