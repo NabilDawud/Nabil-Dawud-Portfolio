@@ -23,13 +23,20 @@ const STRATEGY_CANONICAL_HEADERS: Record<
 };
 
 /**
- * Resolves the trusted client IP from incoming request headers based on an
- * explicitly configured proxy trust strategy.
+ * Extracts the client's real IP address from request headers using a
+ * configurable proxy trust strategy (`vercel`, `cloudflare`, `standard`, or
+ * `development`).
  *
- * In production (NODE_ENV === "production" or options.isProduction === true),
- * TRUSTED_PROXY_STRATEGY must be explicitly defined and supported. If unconfigured
- * or if the canonical header is missing/invalid, the resolver fails closed (returns ip: null)
- * without falling back to loopback or alternative headers.
+ * - **Production** – requires an explicit strategy; fails closed (returns
+ *   `ip: null`) when the strategy is missing or the canonical header is
+ *   absent / invalid.
+ * - **Development** – falls back to `127.0.0.1` when no header is present.
+ *
+ * @param headers  - Incoming request {@link Headers} object.
+ * @param options  - Optional overrides for the proxy strategy and
+ *                   production flag.
+ * @returns A {@link ClientIpResult} containing the resolved IP (or `null`),
+ *          the header source, validity flag, and an optional failure reason.
  */
 export function extractClientIp(
   headers: Headers,
